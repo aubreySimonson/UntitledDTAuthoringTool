@@ -9482,7 +9482,7 @@ GameObject:
   - component: {fileID: 6418746133603079294}
   - component: {fileID: 732246029433408178}
   m_Layer: 0
-  m_Name: DEVICE
+  m_Name: DEVICE-Old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
