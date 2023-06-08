@@ -29,4 +29,5 @@ public class AbstractNode : MonoBehaviour
   public AbstractValue value;
   public string nodeName;
   public GameObject physicalRepresentation;
+
 }

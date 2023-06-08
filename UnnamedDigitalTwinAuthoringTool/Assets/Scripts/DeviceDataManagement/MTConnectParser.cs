@@ -13,6 +13,7 @@ using System.IO;//for file reading
 /// and have the rest of the project not particularly care
 ///
 /// Assumtions to check: can we collaps all nodes with the same name which are children on one node?
+/// is Samples a reasonable name to expect?
 ///
 /// </summary>
 
@@ -48,24 +49,34 @@ public class MTConnectParser : MonoBehaviour
     XmlNode allContent = topLevelNodes[1];
     Debug.Log("This should be everything else: " + allContent);
     Debug.Log("attributes? " + allContent.Name);//<-----THATS HOW YOU GET THE NAME
-    CreateNodeGameObject(allContent);
+    CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
     Debug.Log("that worked?");
   }
 
-  private AbstractNode CreateNodeGameObject(XmlNode node){//there should probably be separate recursive and non-recursive versions... there's a lot of duplicated code between overloads
-    totalNodes++;//for debugging, cut later
-    AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
-    NodeRecursion(node, thisNodeUnity);
-    return thisNodeUnity;
+  private AbstractNode CreateNodeGameObject(XmlNode node, bool doRecursion){//there should probably be separate recursive and non-recursive versions
+    if(node.Name!="#text"){//trims white space
+      totalNodes++;//for debugging, cut later
+      AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
+      if(doRecursion){
+        NodeRecursion(node, thisNodeUnity);
+      }
+      return thisNodeUnity;
+    }
+    return null;
   }
 
-  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode){//this is a big vague and misleading
-    totalNodes++;//for debugging, cut later
-    AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
-    thisNodeUnity.parentNode = parentNode;
-    NodeRecursion(node, thisNodeUnity);
-    return thisNodeUnity;
+  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a big vague and misleading
+    if(node.Name!="#text"){//trims white space
+      totalNodes++;//for debugging, cut later
+      AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
+      thisNodeUnity.parentNode = parentNode;
+      if(doRecursion){
+        NodeRecursion(node, thisNodeUnity);
+      }
+      return thisNodeUnity;
+    }
+    return null;
   }
 
   //there are a bunch of things we do across the different overloads of createnodegameobject in exactly the same way
@@ -75,13 +86,14 @@ public class MTConnectParser : MonoBehaviour
     //Debug.Log("Node created: " + node.Name);
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
     AbstractNode thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
+    thisNodeUnity.nodeName = node.Name;
     return thisNodeUnity;
   }
 
   private void NodeRecursion(XmlNode node, AbstractNode thisNodeUnity){
     XmlNodeList childNodes = node.ChildNodes;
     thisNodeUnity.childNodes = new List<AbstractNode>();
-    if(collapseDuplicateSamples){
+    if(collapseDuplicateSamples && node.Name == "Samples"){
       List<string> nodeNames = new List<string>();
       foreach(XmlNode childNode in childNodes){
         if(!nodeNames.Contains(childNode.Name)){
@@ -91,9 +103,18 @@ public class MTConnectParser : MonoBehaviour
       }//end for
     }//end if
     else{
-      foreach(XmlNode childNode in childNodes){
-        thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
-      }//end for
+        foreach(XmlNode childNode in childNodes){
+          thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
+        }//end for
     }//end else
   }
+
+  private bool AreSameNamedSiblings(string name, AbstractNode parentNode){
+    foreach(AbstractNode sibling in parentNode.childNodes){
+      if(sibling.nodeName == name){
+        return true;
+      }
+    }//end for
+    return false;
+  }//end check for same named siblings
 }

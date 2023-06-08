@@ -239,6 +239,8 @@ MonoBehaviour:
   values: []
   filePath: 
   nodePrefab: {fileID: 153911927606555916, guid: ed67a62ae279f4048aea57002267a7a3, type: 3}
+  collapseDuplicateSamples: 0
+  totalNodes: 0
 --- !u!4 &481293951
 Transform:
   m_ObjectHideFlags: 0
