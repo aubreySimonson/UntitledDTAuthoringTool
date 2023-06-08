@@ -43,13 +43,9 @@ public class MTConnectParser : MonoBehaviour
     XmlDocument xmlDoc = new XmlDocument();
     xmlDoc.Load(filePath);
     XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
-    XmlNode header = topLevelNodes[0];
-    Debug.Log("This should be the header: " + header);
     XmlNode allContent = topLevelNodes[1];
-    Debug.Log("This should be everything else: " + allContent);
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
-    Debug.Log("that worked?");
   }
 
   private AbstractNode CreateNodeGameObject(XmlNode node, bool doRecursion){//there should probably be separate recursive and non-recursive versions
@@ -82,7 +78,13 @@ public class MTConnectParser : MonoBehaviour
   //these are all of our helper functions for making out code drier.
   private AbstractNode CreateNodeHelperFunction(XmlNode node){
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
-    AbstractNode thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
+    AbstractNode thisNodeUnity;
+    if(node.Name == "DeviceStream"){
+      thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
+    }
+    else{
+      thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();//inherits from abstract node
+    }
     if(rootNode==null){
       rootNode=thisNodeGo;
     }
