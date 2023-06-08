@@ -71,6 +71,7 @@ public class MTConnectParser : MonoBehaviour
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
       thisNodeUnity.parentNode = parentNode;
+      thisNodeUnity.gameObject.transform.parent = parentNode.gameObject.transform;
       if(doRecursion){
         NodeRecursion(node, thisNodeUnity);
       }
@@ -93,18 +94,18 @@ public class MTConnectParser : MonoBehaviour
   private void NodeRecursion(XmlNode node, AbstractNode thisNodeUnity){
     XmlNodeList childNodes = node.ChildNodes;
     thisNodeUnity.childNodes = new List<AbstractNode>();
-    if(collapseDuplicateSamples && node.Name == "Samples"){
+    if(collapseDuplicateSamples && node.Name == "Samples"){//don't do recursion on children of samples
       List<string> nodeNames = new List<string>();
       foreach(XmlNode childNode in childNodes){
         if(!nodeNames.Contains(childNode.Name)){
           nodeNames.Add(childNode.Name);
-          thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
+          thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity, false));
         }
       }//end for
     }//end if
     else{
         foreach(XmlNode childNode in childNodes){
-          thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
+          thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity, true));
         }//end for
     }//end else
   }
