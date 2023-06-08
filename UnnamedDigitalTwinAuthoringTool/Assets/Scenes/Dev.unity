@@ -775,6 +775,17 @@ PrefabInstance:
       objectReference: {fileID: 875636329}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 885ecae56b16f13428a67de5ae482a72, type: 3}
+--- !u!114 &1372680005 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2019721772260721220, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
+  m_PrefabInstance: {fileID: 806029655}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedef3ec43127461d9d3479ef456e377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1579750587
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,6 +895,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1644073192}
+  - component: {fileID: 1644073193}
   m_Layer: 0
   m_Name: CreateDevicesMenu
   m_TagString: Untagged
@@ -906,6 +918,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644073193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644073191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad6f2d5fa541d47a1bd359f03114c4ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parser: {fileID: 1372680005}
+  rootNode: {fileID: 0}
 --- !u!1 &1685929568
 GameObject:
   m_ObjectHideFlags: 0

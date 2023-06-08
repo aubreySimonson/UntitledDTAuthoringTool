@@ -31,7 +31,7 @@ public class MTConnectParser : MonoBehaviour
 
   public GameObject rootNode;
 
-  void Start(){
+  void Awake(){//awake runs before the first frame, so that other things can use this data
     //we're setting this here because doing it in the inspector is annoying
     filePath = "Assets/Resources/DATA-DO-NOT-COMMIT-TO-GIT/data_ur.xml";
     if(useStaticSampleData){
