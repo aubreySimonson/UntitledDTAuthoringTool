@@ -5,19 +5,31 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;//for file reading
 
+/// <summary>
+/// This script is not part of Theo's original repo.
+///
+/// This reads data, and assembles it into a graph of Nodes (which really need a better name...)
+/// It should be possible to replace this with other parsers from other sources,
+/// and have the rest of the project not particularly care
+///
+/// Assumtions to check: can we collaps all nodes with the same name which are children on one node?
+///
+/// </summary>
+
 public class MTConnectParser : MonoBehaviour
 {
   //our nice data structure is for interface and people things.
   //the only thing the parser needs to know is what numbers need updated, and what to put there.
 
   public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
-  public List<AbstractValue> values;
+  public List<AbstractValue> values;//all values that could possibly be updated. maybe trying to have this list at all is unworkable...
   public string filePath;
 
   public GameObject nodePrefab;
 
-  //vars belod this are for debugging-- don't keep them
-  public XmlNodeList topLevelNodes;
+  public bool collapseDuplicateSamples;//do this whenever you have a lot of data-- for example, time-series data-- to prevent your computer from freezing
+
+  public int totalNodes = 0;//for debugging
 
   void Start(){
     //we're setting this here because doing it in the inspector is annoying
@@ -30,36 +42,58 @@ public class MTConnectParser : MonoBehaviour
   private void ReadStaticSampleData(){
     XmlDocument xmlDoc = new XmlDocument();
     xmlDoc.Load(filePath);
-    topLevelNodes = xmlDoc.ChildNodes; //List of all devices
+    XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
     XmlNode header = topLevelNodes[0];
     Debug.Log("This should be the header: " + header);
     XmlNode allContent = topLevelNodes[1];
     Debug.Log("This should be everything else: " + allContent);
-    CreateNodeGameObject(topLevelNodes[1]);
+    Debug.Log("attributes? " + allContent.Name);//<-----THATS HOW YOU GET THE NAME
+    CreateNodeGameObject(allContent);
+    Debug.Log("Total nodes: " + totalNodes);
     Debug.Log("that worked?");
   }
 
-  private AbstractNode CreateNodeGameObject(XmlNode node){
-    Debug.Log("CreateNodeGameObject called again");
-    GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
-    AbstractNode thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
-    XmlNodeList childNodes = node.ChildNodes;
-    thisNodeUnity.childNodes = new List<AbstractNode>();
-    foreach(XmlNode childNode in childNodes){
-      thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
-    }
+  private AbstractNode CreateNodeGameObject(XmlNode node){//there should probably be separate recursive and non-recursive versions... there's a lot of duplicated code between overloads
+    totalNodes++;//for debugging, cut later
+    AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
+    NodeRecursion(node, thisNodeUnity);
     return thisNodeUnity;
   }
-  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode){//this is a big vague and misleading-- make having the parent node optional.
-    Debug.Log("CreateNodeGameObject called again");
+
+  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode){//this is a big vague and misleading
+    totalNodes++;//for debugging, cut later
+    AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
+    thisNodeUnity.parentNode = parentNode;
+    NodeRecursion(node, thisNodeUnity);
+    return thisNodeUnity;
+  }
+
+  //there are a bunch of things we do across the different overloads of createnodegameobject in exactly the same way
+  //these are all of our helper functions for making out code drier.
+  private AbstractNode CreateNodeHelperFunction(XmlNode node){
+    //Debug.Log("CreateNodeGameObject called again");//having this turned on will slow things down-- it's the 8k library books problem
+    //Debug.Log("Node created: " + node.Name);
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
     AbstractNode thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
-    thisNodeUnity.parentNode = parentNode;
+    return thisNodeUnity;
+  }
+
+  private void NodeRecursion(XmlNode node, AbstractNode thisNodeUnity){
     XmlNodeList childNodes = node.ChildNodes;
     thisNodeUnity.childNodes = new List<AbstractNode>();
-    foreach(XmlNode childNode in childNodes){
-      thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
-    }
-    return thisNodeUnity;
+    if(collapseDuplicateSamples){
+      List<string> nodeNames = new List<string>();
+      foreach(XmlNode childNode in childNodes){
+        if(!nodeNames.Contains(childNode.Name)){
+          nodeNames.Add(childNode.Name);
+          thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
+        }
+      }//end for
+    }//end if
+    else{
+      foreach(XmlNode childNode in childNodes){
+        thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity));
+      }//end for
+    }//end else
   }
 }
