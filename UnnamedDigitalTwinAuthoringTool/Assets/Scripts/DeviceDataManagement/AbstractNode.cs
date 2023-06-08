@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml;
+using System.Xml.Serialization;
 
 /// <summary>
 /// This script is not part of Theo's original repo.
@@ -25,9 +27,9 @@ public class AbstractNode : MonoBehaviour
 {
   public List<AbstractNode> childNodes;
   public AbstractNode parentNode;//the choice to make this a single node or a list... is really important
-
-  public AbstractValue value;
   public string nodeName;
+  public string nodeID;
+  public AbstractValue value;
+  //do you also add a dictionary of other values?
   public GameObject physicalRepresentation;
-
 }

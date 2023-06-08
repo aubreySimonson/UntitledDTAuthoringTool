@@ -12,9 +12,6 @@ using System.IO;//for file reading
 /// It should be possible to replace this with other parsers from other sources,
 /// and have the rest of the project not particularly care
 ///
-/// Assumtions to check: can we collaps all nodes with the same name which are children on one node?
-/// is Samples a reasonable name to expect?
-///
 /// </summary>
 
 public class MTConnectParser : MonoBehaviour
@@ -32,6 +29,8 @@ public class MTConnectParser : MonoBehaviour
 
   public int totalNodes = 0;//for debugging
 
+  public GameObject rootNode;
+
   void Start(){
     //we're setting this here because doing it in the inspector is annoying
     filePath = "Assets/Resources/DATA-DO-NOT-COMMIT-TO-GIT/data_ur.xml";
@@ -48,7 +47,6 @@ public class MTConnectParser : MonoBehaviour
     Debug.Log("This should be the header: " + header);
     XmlNode allContent = topLevelNodes[1];
     Debug.Log("This should be everything else: " + allContent);
-    Debug.Log("attributes? " + allContent.Name);//<-----THATS HOW YOU GET THE NAME
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
     Debug.Log("that worked?");
@@ -83,11 +81,15 @@ public class MTConnectParser : MonoBehaviour
   //there are a bunch of things we do across the different overloads of createnodegameobject in exactly the same way
   //these are all of our helper functions for making out code drier.
   private AbstractNode CreateNodeHelperFunction(XmlNode node){
-    //Debug.Log("CreateNodeGameObject called again");//having this turned on will slow things down-- it's the 8k library books problem
-    //Debug.Log("Node created: " + node.Name);
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
     AbstractNode thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
+    if(rootNode==null){
+      rootNode=thisNodeGo;
+    }
     thisNodeUnity.nodeName = node.Name;
+    if(node.Attributes["dataItemId"]!=null){
+      thisNodeUnity.nodeID = node.Attributes["dataItemId"].Value;
+    }
     return thisNodeUnity;
   }
 
@@ -110,6 +112,7 @@ public class MTConnectParser : MonoBehaviour
     }//end else
   }
 
+  //consider cutting this. We don't use it right now.
   private bool AreSameNamedSiblings(string name, AbstractNode parentNode){
     foreach(AbstractNode sibling in parentNode.childNodes){
       if(sibling.nodeName == name){
