@@ -9,12 +9,18 @@ public class DevicesMenu : MonoBehaviour
     public GameObject rootNode;
     public List<AbstractNode> allDevices;
     public GameObject devicePrefab;
+    public Transform putDevicesHere;
+
+    //positioning stuff
+    private float currentY;//where we put the most recent menu option
+    public float yInterval;//distance between menu options
 
 
     // Start is called before the first frame update
     void Start()
     {
       rootNode = parser.rootNode;
+      currentY = 1.428f;
       AssembleDevices();
     }
 
@@ -23,7 +29,8 @@ public class DevicesMenu : MonoBehaviour
       foreach(Device device in allDevices){
         GameObject newDevice = Instantiate(devicePrefab);//runs
         //...and then you need to do some magic to make them stack correctly, and get the name right...
-        
+        newDevice.transform.position = new Vector3(-0.224f, currentY, 1.458f);
+        currentY-=yInterval;
         //change the label to the name-- there must be better ways of doing this...
         newDevice.transform.GetComponent<DeviceComponentFinder>().deviceLabel.SetText(device.deviceName);
       }
