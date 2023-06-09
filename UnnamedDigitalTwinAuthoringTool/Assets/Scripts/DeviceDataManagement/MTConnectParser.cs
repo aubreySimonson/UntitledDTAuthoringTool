@@ -96,6 +96,7 @@ public class MTConnectParser : MonoBehaviour
     AbstractNode thisNodeUnity;
     if(node.Name == "DeviceStream"){
       thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
+      thisNodeUnity.GetComponent<Device>().deviceName = node.Attributes["name"].Value;//we assume that all devices will have a name in this format. do they?
     }
     else{
       thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();//inherits from abstract node
