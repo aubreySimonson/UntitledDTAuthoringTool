@@ -50,29 +50,15 @@ public class MTConnectParser : MonoBehaviour
 
   private void ReadStaticSampleData(){
     XmlDocument xmlDoc = new XmlDocument();
-    debugText.text = "we make an xml doc";//this runs
-    debugText.text = "filePath is" + filePath;
 
-    //begin guesses at how to do this on android
-    //xml= new StringReader(XMLObject.text);
-    //debugText.text = "we open the string reader";
-    //extractedContent = xml.ReadToEnd();
-    //debugText.text = "what does it say?" + xml;//<System.IO.StringReader >:(
-
-    TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
-    XmlDocument xmldoc = new XmlDocument ();
-    xmldoc.LoadXml ( textAsset.text );
-    XmlNodeList topLevelNodes = xmldoc.ChildNodes; //List of all devices
-    XmlNode allContent = topLevelNodes[1];
-    CreateNodeGameObject(allContent, true);
-
-    //end guesses on how to do this on android
-
-    //commented out lines below this are the solution that works on desktop
+    //commented out lines below this are a solution that works on desktop but not Quest
     //xmlDoc.Load(filePath);
-    //debugText.text = "we get through loading the file";//this doesn't<---this ran, but it overwrote the previous line, so we're commenting it out for now
-    //XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
-    //XmlNode allContent = topLevelNodes[1];
+
+    //the following works on both quest and desktop
+    TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+    xmlDoc.LoadXml ( textAsset.text );
+    XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
+    XmlNode allContent = topLevelNodes[1];
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
   }
