@@ -80,7 +80,7 @@ public class MTConnectParser : MonoBehaviour
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
       thisNodeUnity.parentNode = parentNode;
-      thisNodeUnity.gameObject.transform.parent = parentNode.gameObject.transform;
+      thisNodeUnity.gameObject.transform.parent = parentNode.gameObject.transform;//stacks them in the hierarchy-- optional
       if(doRecursion){
         NodeRecursion(node, thisNodeUnity);
       }
@@ -93,14 +93,7 @@ public class MTConnectParser : MonoBehaviour
   //these are all of our helper functions for making out code drier.
   private AbstractNode CreateNodeHelperFunction(XmlNode node){
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
-    AbstractNode thisNodeUnity;
-    if(node.Name == "DeviceStream"){
-      thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
-      thisNodeUnity.GetComponent<Device>().deviceName = node.Attributes["name"].Value;//we assume that all devices will have a name in this format. do they?
-    }
-    else{
-      thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();//inherits from abstract node
-    }
+    AbstractNode thisNodeUnity = AddCorrectNodeType(node, thisNodeGo);
     if(rootNode==null){
       rootNode=thisNodeGo;
     }
@@ -128,6 +121,21 @@ public class MTConnectParser : MonoBehaviour
           thisNodeUnity.childNodes.Add(CreateNodeGameObject(childNode, thisNodeUnity, true));
         }//end for
     }//end else
+  }
+
+  //a node could need an abstract node script, 
+  //or a more specific scripts which inherits from it and has special information.
+  //we hide checking for every possible node type we care about down here
+  private AbstractNode AddCorrectNodeType(XmlNode node, GameObject thisNodeGo){
+    AbstractNode thisNodeUnity;
+    if(node.Name == "DeviceStream"){
+      thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
+      thisNodeUnity.GetComponent<Device>().deviceName = node.Attributes["name"].Value;//we assume that all devices will have a name in this format. do they?
+    }
+    else{
+      thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
+    }
+    return thisNodeUnity;
   }
 
   //consider cutting this. We don't use it right now.
