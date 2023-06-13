@@ -10,6 +10,10 @@ using TMPro;
 /// Should go on top-level Create Devices gameobject, 
 /// which is a parent of the relevant canvas.
 ///
+/// It and ComponentsMenu should probably both inherit from 
+/// an abstract class called "Add Nodes Menu" or something, 
+/// but you're going to leave that problem until it's harder to fix.
+///
 /// </summary>
 
 public class DevicesMenu : MonoBehaviour
@@ -44,7 +48,7 @@ public class DevicesMenu : MonoBehaviour
         newDevice.transform.position = new Vector3(-0.224f, currentY, 1.458f);
         currentY-=yInterval;
         //change the label to the name-- there must be better ways of doing this...
-        newDevice.transform.GetComponent<DeviceComponentFinder>().deviceLabel.SetText(device.deviceName);
+        newDevice.transform.GetComponent<VarFinder>().label.SetText(device.deviceName);
       }
     }
 

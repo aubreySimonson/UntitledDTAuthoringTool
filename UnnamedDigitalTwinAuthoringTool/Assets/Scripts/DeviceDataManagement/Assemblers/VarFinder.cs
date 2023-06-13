@@ -12,7 +12,7 @@ using TMPro;
 ///
 /// </summary>
 
-public class DeviceComponentFinder : MonoBehaviour
+public class VarFinder : MonoBehaviour
 {
-  public TextMeshPro deviceLabel;//where the name goes
+  public TextMeshPro label;//where the name goes
 }
