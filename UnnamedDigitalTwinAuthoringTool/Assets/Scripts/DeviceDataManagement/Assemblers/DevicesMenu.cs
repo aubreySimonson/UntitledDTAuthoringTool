@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// This script is not part of Theo's original repo.
+///
+/// Assembles the menu of devices.
+/// Should go on top-level Create Devices gameobject, 
+/// which is a parent of the relevant canvas.
+///
+/// </summary>
+
 public class DevicesMenu : MonoBehaviour
 {
     public MTConnectParser parser;//just for getting the root node. To make this more general, we should probably have the parser give this to something else.
@@ -22,6 +31,9 @@ public class DevicesMenu : MonoBehaviour
       rootNode = parser.rootNode;
       currentY = 1.428f;
       AssembleDevices();
+      if(parser == null){
+        parser = GameObject.FindObjectOfType<MTConnectParser>();
+      }
     }
 
     public void AssembleDevices(){
