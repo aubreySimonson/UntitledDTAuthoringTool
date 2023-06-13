@@ -17,25 +17,24 @@ using UnityEngine;
 public class ComponentsMenu : MonoBehaviour
 {
     //we're making the assumption that all components are children of devices-- that might be wrong
-    public Device parentDevice;
-    public GameObject rootNode;//parent device gameobject--components should become children of it when removed from menu
+    public Device parentNode;
+    public GameObject parentDevice;
     public List<AbstractNode> allComponents;//only the ones which are children of parent device
     public GameObject componentPrefab;
-    public Transform putComponentsHere;
 
     void Start()
     {
         StartCoroutine(WaitForParentInfo());
-        rootNode = parentDevice.gameObject;
-
     }
 
     public void AssembleComponents(){
-      FindComponents(rootNode.GetComponent<AbstractNode>());
+      FindComponents(parentNode);
+      Debug.Log("in assemble components");
       foreach(Component component in allComponents){
         GameObject newComponent = Instantiate(componentPrefab);//runs
         //...and then you need to do some magic to make them stack correctly, and get the name right...
-        //newDevice.transform.position = new Vector3(-0.224f, currentY, 1.458f);
+        newComponent.transform.parent = gameObject.transform;
+        newComponent.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
         //currentY-=yInterval;
         //change the label to the name-- there must be better ways of doing this...
         newComponent.transform.GetComponent<VarFinder>().label.SetText(component.componentName);
@@ -58,6 +57,7 @@ public class ComponentsMenu : MonoBehaviour
     //this might be totally unnecessary to do. 
     IEnumerator WaitForParentInfo()
     {
-        yield return new WaitUntil(() => parentDevice != null);
+        yield return new WaitUntil(() => parentNode != null);
+        AssembleComponents();
     }
 }

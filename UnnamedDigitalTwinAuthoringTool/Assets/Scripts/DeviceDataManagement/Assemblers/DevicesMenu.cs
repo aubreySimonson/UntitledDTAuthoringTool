@@ -44,6 +44,8 @@ public class DevicesMenu : MonoBehaviour
       FindDevices(rootNode.GetComponent<AbstractNode>());//use this if we can't be sure that devices will have a device component instead of a generic abstract node
       foreach(Device device in allDevices){
         GameObject newDevice = Instantiate(devicePrefab);//runs
+        //tell the components menu of this device what device to start checking the node tree from. A bit messy.
+        newDevice.GetComponentInChildren<ComponentsMenu>().parentNode = device;
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newDevice.transform.position = new Vector3(-0.224f, currentY, 1.458f);
         currentY-=yInterval;
