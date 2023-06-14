@@ -828,7 +828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1579750588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,7 +955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6f2d5fa541d47a1bd359f03114c4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parser: {fileID: 0}
+  parser: {fileID: 1268225020}
   rootNode: {fileID: 0}
   allDevices: []
   devicePrefab: {fileID: 3615445070259069230, guid: 17ce7be48b2ac4632a74e950dcdaac27, type: 3}

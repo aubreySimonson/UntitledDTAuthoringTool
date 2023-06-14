@@ -45,7 +45,7 @@ public class DevicesMenu : MonoBehaviour
       foreach(Device device in allDevices){
         GameObject newDevice = Instantiate(devicePrefab);//runs
         //tell the components menu of this device what device to start checking the node tree from. A bit messy.
-        newDevice.GetComponentInChildren<ComponentsMenu>().parentNode = device;
+        newDevice.GetComponentInChildren<ComponentsMenu>(true).parentNode = device;//true = include inactive
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newDevice.transform.position = new Vector3(-0.224f, currentY, 1.458f);
         currentY-=yInterval;
