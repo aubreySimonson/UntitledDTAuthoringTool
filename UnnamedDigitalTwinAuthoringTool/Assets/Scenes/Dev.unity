@@ -289,36 +289,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &367915452
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 367915453}
-  m_Layer: 0
-  m_Name: PutDeviceMenuOptionsHere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &367915453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 367915452}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1644073192}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &511282411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -541,7 +511,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MTConnect
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2019721772260721220, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
 --- !u!1 &857106548 stripped
 GameObject:
@@ -752,6 +723,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1268225019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2019721772260721223, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
+  m_PrefabInstance: {fileID: 806029655}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1268225020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268225019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b0594a55df4409b8e74b75e9a86db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useStaticSampleData: 1
+  values: []
+  filePath: 
+  nodePrefab: {fileID: 153911927606555916, guid: ed67a62ae279f4048aea57002267a7a3, type: 3}
+  collapseDuplicateSamples: 1
+  totalNodes: 0
+  debugText: {fileID: 0}
+  rootNode: {fileID: 0}
+  XMLObject: {fileID: 4900000, guid: 887ee04676bf64f87a4d8814ddab7673, type: 3}
+--- !u!1 &1269131175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1269131176}
+  m_Layer: 0
+  m_Name: Devices
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1269131176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269131175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1644073192}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1283481097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -813,17 +840,6 @@ PrefabInstance:
       objectReference: {fileID: 875636329}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 885ecae56b16f13428a67de5ae482a72, type: 3}
---- !u!114 &1372680005 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2019721772260721220, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
-  m_PrefabInstance: {fileID: 806029655}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fedef3ec43127461d9d3479ef456e377, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1579750587
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1579750588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,6 +951,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1644073192}
   - component: {fileID: 1644073193}
+  - component: {fileID: 1644073195}
+  - component: {fileID: 1644073194}
   m_Layer: 0
   m_Name: CreateDevicesMenu
   m_TagString: Untagged
@@ -954,7 +972,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 181558924}
-  - {fileID: 367915453}
+  - {fileID: 1269131176}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -970,12 +988,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6f2d5fa541d47a1bd359f03114c4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parser: {fileID: 1372680005}
+  parser: {fileID: 1268225020}
   rootNode: {fileID: 0}
   allDevices: []
-  devicePrefab: {fileID: 3615445070259069230, guid: b79b68792190d49dea4a25946adc9eb7, type: 3}
-  putDevicesHere: {fileID: 367915453}
+  devicePrefab: {fileID: 3615445070259069230, guid: 17ce7be48b2ac4632a74e950dcdaac27, type: 3}
+  putDevicesHere: {fileID: 0}
+  generatorMenu: {fileID: 1644073195}
   yInterval: 0.1
+--- !u!65 &1644073194
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644073191}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 1, z: 0.15}
+  m_Center: {x: 0, y: -0.45, z: 0}
+--- !u!114 &1644073195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644073191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ef0cf30d85a4386a1f8b779a365be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectorObject: {fileID: 1269131175}
+  menuCollider: {fileID: 1644073194}
+  menuItems: []
 --- !u!1 &1685929568
 GameObject:
   m_ObjectHideFlags: 0
