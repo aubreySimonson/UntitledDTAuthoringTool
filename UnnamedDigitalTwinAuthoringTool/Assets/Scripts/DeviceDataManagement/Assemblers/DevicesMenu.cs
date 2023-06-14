@@ -23,6 +23,7 @@ public class DevicesMenu : MonoBehaviour
     public List<AbstractNode> allDevices;
     public GameObject devicePrefab;
     public Transform putDevicesHere;
+    public GeneratorMenu generatorMenu;
 
     //positioning stuff
     private float currentY;//where we put the most recent menu option
@@ -38,12 +39,16 @@ public class DevicesMenu : MonoBehaviour
       if(parser == null){
         parser = GameObject.FindObjectOfType<MTConnectParser>();
       }
+      if(generatorMenu == null){
+        generatorMenu = gameObject.GetComponent<GeneratorMenu>();
+      }
     }
 
     public void AssembleDevices(){
       FindDevices(rootNode.GetComponent<AbstractNode>());//use this if we can't be sure that devices will have a device component instead of a generic abstract node
       foreach(Device device in allDevices){
         GameObject newDevice = Instantiate(devicePrefab);//runs
+        generatorMenu.menuItems.Add(newDevice);
         //tell the components menu of this device what device to start checking the node tree from. A bit messy.
         newDevice.GetComponentInChildren<ComponentsMenu>(true).parentNode = device;//true = include inactive
         //...and then you need to do some magic to make them stack correctly, and get the name right...

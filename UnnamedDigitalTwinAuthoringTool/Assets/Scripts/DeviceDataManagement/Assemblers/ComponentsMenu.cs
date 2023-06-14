@@ -21,6 +21,8 @@ public class ComponentsMenu : MonoBehaviour
     public GameObject parentDevice;
     public List<AbstractNode> allComponents;//only the ones which are children of parent device
     public GameObject componentPrefab;
+    public GeneratorMenu generatorMenu;
+
 
     //positioning stuff
     public float currentY;//where we put the most recent menu option
@@ -29,6 +31,9 @@ public class ComponentsMenu : MonoBehaviour
     void Start()
     {
         StartCoroutine(WaitForParentInfo());
+        if(generatorMenu == null){
+            generatorMenu = gameObject.GetComponent<GeneratorMenu>();
+        }
     }
 
     public void AssembleComponents(){
@@ -36,6 +41,7 @@ public class ComponentsMenu : MonoBehaviour
       Debug.Log("in assemble components");
       foreach(Component component in allComponents){
         GameObject newComponent = Instantiate(componentPrefab);//runs
+        generatorMenu.menuItems.Add(newComponent);
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newComponent.transform.parent = gameObject.transform;
         newComponent.transform.localPosition = new Vector3(-0.25f, currentY, 0.0f);

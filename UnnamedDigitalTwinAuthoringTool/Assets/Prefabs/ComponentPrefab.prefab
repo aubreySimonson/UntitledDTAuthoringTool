@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 220023681196021017}
   - component: {fileID: 5780137182763125717}
   - component: {fileID: 212228066398917487}
+  - component: {fileID: 1937765904235658658}
   m_Layer: 0
   m_Name: ComponentPrefab
   m_TagString: Untagged
@@ -498,6 +499,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 6493726423030340775}
+--- !u!65 &1937765904235658658
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3494559239642672317}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.55, y: 0.1, z: 0.1}
+  m_Center: {x: 0.23, y: 0, z: 0}
 --- !u!1 &3590194740750899645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,18 +2749,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Oculus.Interaction.Samples.SceneLoader, Oculus.Interaction.Samples
-        m_MethodName: Load
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HandGrabExamples
-          m_BoolArgument: 0
-        m_CallState: 2
   _whenHover:
     m_PersistentCalls:
       m_Calls: []
@@ -2767,18 +2769,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6493726423831547796}
-        m_TargetAssemblyTypeName: SeeMoreButton, Assembly-CSharp
-        m_MethodName: SeeMoreOrLess
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
   _whenUnselect:
     m_PersistentCalls:
