@@ -162,7 +162,24 @@ public class MTConnectParser : MonoBehaviour
   //how to make sure that these all get the right parent nodes is actually quite the issue
   private void SamplesAggregator(XmlNode node){
     //get all children of the node
+    XmlNodeList childNodes = node.ChildNodes;
     //make a samples type for every sample name
+    List<string> sampleNames = new List<string>();    
+    foreach(XmlNode childNode in childNodes){
+      if(!sampleNames.Contains(childNode.Name)){
+        sampleNames.Add(childNode.Name);
+        Debug.Log("Added Sample Type " + childNode.Name);
+      }
+    }
+    List<SampleType> componentSamples = new List<SampleType>();
+    List<GameObject> sampleTypeGOs = new List<GameObject>();
+    foreach(string sampleTypeName in sampleNames){
+      GameObject newSampleTypeGO = Instantiate(nodePrefab);
+      sampleTypeGOs.Add(newSampleTypeGO);
+      SampleType newSampleType = newSampleTypeGO.AddComponent<SampleType>();//this might be incorrect syntax
+      componentSamples.Add(newSampleType);
+      newSampleType.sampleTypeName = sampleTypeName;
+    }
     //aggreggate all samples of that name for eac sample name
     Debug.Log("Sample node aggregator called");
   }
