@@ -70,7 +70,7 @@ public class MTConnectParser : MonoBehaviour
     if(node.Name!="#text"){//trims white space
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
-      if(doRecursion){
+      if(doRecursion && node.Name!="Samples"){//don't do recursion on sets of samples
         NodeRecursion(node, thisNodeUnity);
       }
       return thisNodeUnity;
@@ -90,7 +90,7 @@ public class MTConnectParser : MonoBehaviour
       }
       thisNodeUnity.parentNode = parentNode;
       thisNodeUnity.gameObject.transform.parent = parentNode.gameObject.transform;//stacks them in the hierarchy-- optional
-      if(doRecursion){
+      if(doRecursion && node.Name!="Samples"){//don't do recursion on sets of samples
         NodeRecursion(node, thisNodeUnity);
       }
       return thisNodeUnity;
@@ -150,8 +150,8 @@ public class MTConnectParser : MonoBehaviour
       thisNodeUnity.GetComponent<Component>().componentName = node.Attributes["component"].Value;
     }
     else if (node.Name == "Samples"){
-      SamplesAggregator(node);
-      thisNodeUnity = null;
+      thisNodeUnity = thisNodeGo.AddComponent<SamplesHolder>();//inherits from abstact node
+      SamplesAggregator(node, thisNodeUnity, thisNodeGo);
     }
     else{
       thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
@@ -160,9 +160,9 @@ public class MTConnectParser : MonoBehaviour
   }
 
   //how to make sure that these all get the right parent nodes is actually quite the issue
-  private void SamplesAggregator(XmlNode node){
+  private void SamplesAggregator(XmlNode holderNode, AbstractNode holderNodeUnity, GameObject holderGO){
     //get all children of the node
-    XmlNodeList childNodes = node.ChildNodes;
+    XmlNodeList childNodes = holderNode.ChildNodes;
     //make a samples type for every sample name
     List<string> sampleNames = new List<string>();    
     foreach(XmlNode childNode in childNodes){
@@ -171,16 +171,19 @@ public class MTConnectParser : MonoBehaviour
         Debug.Log("Added Sample Type " + childNode.Name);
       }
     }
-    List<SampleType> componentSamples = new List<SampleType>();
+    List<SampleType> sampleTypes = new List<SampleType>();
     List<GameObject> sampleTypeGOs = new List<GameObject>();
     foreach(string sampleTypeName in sampleNames){
       GameObject newSampleTypeGO = Instantiate(nodePrefab);
+      Debug.Log("instantiating go for " + sampleTypeName, newSampleTypeGO);
       sampleTypeGOs.Add(newSampleTypeGO);
       SampleType newSampleType = newSampleTypeGO.AddComponent<SampleType>();//this might be incorrect syntax
-      componentSamples.Add(newSampleType);
+      sampleTypes.Add(newSampleType);
       newSampleType.sampleTypeName = sampleTypeName;
+      newSampleType.parentNode = holderNodeUnity;
+      newSampleTypeGO.transform.parent = holderGO.transform;
     }
-    //aggreggate all samples of that name for eac sample name
+    //aggreggate all samples of that name for each sample name
     Debug.Log("Sample node aggregator called");
   }
 
