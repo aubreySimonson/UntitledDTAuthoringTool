@@ -64,6 +64,9 @@ public class MTConnectParser : MonoBehaviour
   }
 
   private AbstractNode CreateNodeGameObject(XmlNode node, bool doRecursion){//there should probably be separate recursive and non-recursive versions
+    if(node == null){
+      return null;
+    }
     if(node.Name!="#text"){//trims white space
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
@@ -76,9 +79,15 @@ public class MTConnectParser : MonoBehaviour
   }
 
   private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a big vague and misleading
+    if(parentNode==null || node == null){
+      return null;
+    }
     if(node.Name!="#text"){//trims white space
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
+      if(thisNodeUnity == null){//the xml node we found should not get a unity node
+        return null;
+      }
       thisNodeUnity.parentNode = parentNode;
       thisNodeUnity.gameObject.transform.parent = parentNode.gameObject.transform;//stacks them in the hierarchy-- optional
       if(doRecursion){
@@ -94,6 +103,10 @@ public class MTConnectParser : MonoBehaviour
   private AbstractNode CreateNodeHelperFunction(XmlNode node){
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
     AbstractNode thisNodeUnity = AddCorrectNodeType(node, thisNodeGo);
+    if(thisNodeUnity==null){//add correct node type doesn't always return a node
+      Destroy(thisNodeGo);//don't leave an abandoned game object-- obviously some refactoring could make all of this more efficient
+      return null;
+    }
     if(rootNode==null){
       rootNode=thisNodeGo;
     }
@@ -136,10 +149,22 @@ public class MTConnectParser : MonoBehaviour
       thisNodeUnity = thisNodeGo.AddComponent<Component>();//inherits from abstact node
       thisNodeUnity.GetComponent<Component>().componentName = node.Attributes["component"].Value;
     }
+    else if (node.Name == "Samples"){
+      SamplesAggregator(node);
+      thisNodeUnity = null;
+    }
     else{
       thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
     }
     return thisNodeUnity;
+  }
+
+  //how to make sure that these all get the right parent nodes is actually quite the issue
+  private void SamplesAggregator(XmlNode node){
+    //get all children of the node
+    //make a samples type for every sample name
+    //aggreggate all samples of that name for eac sample name
+    Debug.Log("Sample node aggregator called");
   }
 
   //consider cutting this. We don't use it right now.
