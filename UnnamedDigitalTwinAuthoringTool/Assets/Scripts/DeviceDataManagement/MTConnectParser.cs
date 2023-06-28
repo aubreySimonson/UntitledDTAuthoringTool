@@ -168,21 +168,23 @@ public class MTConnectParser : MonoBehaviour
     foreach(XmlNode childNode in childNodes){
       if(!sampleNames.Contains(childNode.Name)){
         sampleNames.Add(childNode.Name);
-        Debug.Log("Added Sample Type " + childNode.Name);
+        //Debug.Log("Added Sample Type " + childNode.Name);
       }
     }
     List<SampleType> sampleTypes = new List<SampleType>();
+    List<AbstractNode> samplesButAbstract = new List<AbstractNode>();//this just prevents us from casting in 187
     List<GameObject> sampleTypeGOs = new List<GameObject>();
     foreach(string sampleTypeName in sampleNames){
       GameObject newSampleTypeGO = Instantiate(nodePrefab);
-      Debug.Log("instantiating go for " + sampleTypeName, newSampleTypeGO);
       sampleTypeGOs.Add(newSampleTypeGO);
-      SampleType newSampleType = newSampleTypeGO.AddComponent<SampleType>();//this might be incorrect syntax
+      SampleType newSampleType = newSampleTypeGO.AddComponent<SampleType>();
       sampleTypes.Add(newSampleType);
       newSampleType.sampleTypeName = sampleTypeName;
+      samplesButAbstract.Add(newSampleType);
       newSampleType.parentNode = holderNodeUnity;
       newSampleTypeGO.transform.parent = holderGO.transform;
     }
+    holderNodeUnity.childNodes = samplesButAbstract;
     //aggreggate all samples of that name for each sample name
     Debug.Log("Sample node aggregator called");
   }

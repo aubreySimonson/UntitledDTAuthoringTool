@@ -42,6 +42,8 @@ public class ComponentsMenu : MonoBehaviour
       foreach(Component component in allComponents){
         GameObject newComponent = Instantiate(componentPrefab);//runs
         generatorMenu.menuItems.Add(newComponent);
+        //tell the samples menu of this component what component to start checking the node tree from. A bit messy.
+        newComponent.GetComponentInChildren<SampleTypesMenu>(true).parentNode = component;//true = include inactive
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newComponent.transform.parent = gameObject.transform;
         newComponent.transform.localPosition = new Vector3(-0.25f, currentY, 0.0f);

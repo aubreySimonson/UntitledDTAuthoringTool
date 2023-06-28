@@ -36,7 +36,7 @@ public class SampleTypesMenu : MonoBehaviour
     }
 
     public void AssembleSamples(){
-      //FindSamples(parentNode);
+      FindSamples(parentNode);
       foreach(SampleType sampleType in allSampleTypes){
         GameObject newSampleType = Instantiate(sampleTypePrefab);
         generatorMenu.menuItems.Add(newSampleType);
@@ -50,16 +50,19 @@ public class SampleTypesMenu : MonoBehaviour
     }
 
     //how this works is going to be /very/ different from how it was for components...
-    // public void FindSamples(AbstractNode thisNode){
-    //   if(thisNode.nodeName == "ComponentStream"){
-    //     allComponents.Add(thisNode);
-    //   }
-    //   else{
-    //     foreach(AbstractNode childNode in thisNode.childNodes){//not relying on the scene hierarchy
-    //       FindComponents(childNode);
-    //     }
-    //   }
-    // }
+    public void FindSamples(AbstractNode thisNode){
+      //this assumes that no sample types will be childen of other sample types
+      if(thisNode.gameObject.GetComponent<SampleType>() != null){
+        allSampleTypes.Add(thisNode);
+      }
+      else{
+        if(thisNode.childNodes[0]!=null){
+          foreach(AbstractNode childNode in thisNode.childNodes){//not relying on the scene hierarchy
+            FindSamples(childNode);
+          }//end foreach
+        }//end if
+      }//end else
+    }//end findsamples
 
     //we use a co-routine to avoid looking for all of the child components of the device
     //before being told what the parent device is.

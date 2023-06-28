@@ -1277,6 +1277,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1373701794836607308}
   - component: {fileID: 5787523838106840268}
+  - component: {fileID: 6416379789201221266}
+  - component: {fileID: 2139743073438220739}
   m_Layer: 0
   m_Name: SamplesMenu
   m_TagString: Untagged
@@ -1312,6 +1314,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thingToToggle: {fileID: 5948278652438502610}
+--- !u!114 &6416379789201221266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948278652438502610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c0fb032da2b48d88b0535088e8c1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentNode: {fileID: 0}
+  parent: {fileID: 3494559239642672317}
+  allSampleTypes: []
+  sampleTypePrefab: {fileID: 8622038507283267499, guid: 4b96a892b62a643649f82413c5372d7a, type: 3}
+  generatorMenu: {fileID: 2139743073438220739}
+  currentY: -0.1
+  yInterval: 0.1
+--- !u!114 &2139743073438220739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948278652438502610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ef0cf30d85a4386a1f8b779a365be6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectorObject: {fileID: 0}
+  menuCollider: {fileID: 0}
+  menuItems: []
 --- !u!1 &5952508227462150077
 GameObject:
   m_ObjectHideFlags: 0
