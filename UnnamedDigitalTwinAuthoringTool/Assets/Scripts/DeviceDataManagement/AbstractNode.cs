@@ -26,7 +26,7 @@ public class AbstractNode : MonoBehaviour
   public AbstractNode parentNode;//the choice to make this a single node or a list... is really important
   public string nodeName;
   public string nodeID;
-  public AbstractValue value;
+  //public AbstractValue value;--actually, it seems like very few nodes actually have values
   //do you also add a dictionary of other values?
   public GameObject physicalRepresentation;
 }

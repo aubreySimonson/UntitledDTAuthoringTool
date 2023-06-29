@@ -64,10 +64,13 @@ public class MTConnectParser : MonoBehaviour
   }
 
   private AbstractNode CreateNodeGameObject(XmlNode node, bool doRecursion){//there should probably be separate recursive and non-recursive versions
+    if(node == null){
+      return null;
+    }
     if(node.Name!="#text"){//trims white space
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
-      if(doRecursion){
+      if(doRecursion && node.Name!="Samples"){//don't do recursion on sets of samples
         NodeRecursion(node, thisNodeUnity);
       }
       return thisNodeUnity;
@@ -76,12 +79,18 @@ public class MTConnectParser : MonoBehaviour
   }
 
   private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a big vague and misleading
+    if(parentNode==null || node == null){
+      return null;
+    }
     if(node.Name!="#text"){//trims white space
       totalNodes++;//for debugging, cut later
       AbstractNode thisNodeUnity = CreateNodeHelperFunction(node);
+      if(thisNodeUnity == null){//the xml node we found should not get a unity node
+        return null;
+      }
       thisNodeUnity.parentNode = parentNode;
       thisNodeUnity.gameObject.transform.parent = parentNode.gameObject.transform;//stacks them in the hierarchy-- optional
-      if(doRecursion){
+      if(doRecursion && node.Name!="Samples"){//don't do recursion on sets of samples
         NodeRecursion(node, thisNodeUnity);
       }
       return thisNodeUnity;
@@ -94,6 +103,10 @@ public class MTConnectParser : MonoBehaviour
   private AbstractNode CreateNodeHelperFunction(XmlNode node){
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
     AbstractNode thisNodeUnity = AddCorrectNodeType(node, thisNodeGo);
+    if(thisNodeUnity==null){//add correct node type doesn't always return a node
+      Destroy(thisNodeGo);//don't leave an abandoned game object-- obviously some refactoring could make all of this more efficient
+      return null;
+    }
     if(rootNode==null){
       rootNode=thisNodeGo;
     }
@@ -136,10 +149,44 @@ public class MTConnectParser : MonoBehaviour
       thisNodeUnity = thisNodeGo.AddComponent<Component>();//inherits from abstact node
       thisNodeUnity.GetComponent<Component>().componentName = node.Attributes["component"].Value;
     }
+    else if (node.Name == "Samples"){
+      thisNodeUnity = thisNodeGo.AddComponent<SamplesHolder>();//inherits from abstact node
+      SamplesAggregator(node, thisNodeUnity, thisNodeGo);
+    }
     else{
       thisNodeUnity = thisNodeGo.AddComponent<AbstractNode>();
     }
     return thisNodeUnity;
+  }
+
+  //how to make sure that these all get the right parent nodes is actually quite the issue
+  private void SamplesAggregator(XmlNode holderNode, AbstractNode holderNodeUnity, GameObject holderGO){
+    //get all children of the node
+    XmlNodeList childNodes = holderNode.ChildNodes;
+    //make a samples type for every sample name
+    List<string> sampleNames = new List<string>();    
+    foreach(XmlNode childNode in childNodes){
+      if(!sampleNames.Contains(childNode.Name)){
+        sampleNames.Add(childNode.Name);
+        //Debug.Log("Added Sample Type " + childNode.Name);
+      }
+    }
+    List<SampleType> sampleTypes = new List<SampleType>();
+    List<AbstractNode> samplesButAbstract = new List<AbstractNode>();//this just prevents us from casting in 187
+    List<GameObject> sampleTypeGOs = new List<GameObject>();
+    foreach(string sampleTypeName in sampleNames){
+      GameObject newSampleTypeGO = Instantiate(nodePrefab);
+      sampleTypeGOs.Add(newSampleTypeGO);
+      SampleType newSampleType = newSampleTypeGO.AddComponent<SampleType>();
+      sampleTypes.Add(newSampleType);
+      newSampleType.sampleTypeName = sampleTypeName;
+      samplesButAbstract.Add(newSampleType);
+      newSampleType.parentNode = holderNodeUnity;
+      newSampleTypeGO.transform.parent = holderGO.transform;
+    }
+    holderNodeUnity.childNodes = samplesButAbstract;
+    //aggreggate all samples of that name for each sample name
+    Debug.Log("Sample node aggregator called");
   }
 
   //consider cutting this. We don't use it right now.
