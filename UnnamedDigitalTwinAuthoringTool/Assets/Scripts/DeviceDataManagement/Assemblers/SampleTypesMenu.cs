@@ -22,6 +22,8 @@ public class SampleTypesMenu : MonoBehaviour
     public GameObject sampleTypePrefab;
     public GeneratorMenu generatorMenu;
 
+    public GameObject camera;//main camera, for the menus to face towards when generated
+
 
     //positioning stuff
     public float currentY;//where we put the most recent menu option
@@ -33,6 +35,9 @@ public class SampleTypesMenu : MonoBehaviour
         if(generatorMenu == null){
             generatorMenu = gameObject.GetComponent<GeneratorMenu>();
         }
+        if(camera == null){
+          camera = GameObject.FindWithTag("MainCamera");
+        }
     }
 
     public void AssembleSamples(){
@@ -43,6 +48,8 @@ public class SampleTypesMenu : MonoBehaviour
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newSampleType.transform.parent = gameObject.transform;
         newSampleType.transform.localPosition = new Vector3(-0.25f, currentY, 0.0f);
+        //newSampleType.transform.transform.LookAt(Vector3.zero);
+        newSampleType.transform.rotation = newSampleType.transform.parent.rotation;
         currentY-=yInterval;
         //change the label to the name-- there must be better ways of doing this...
         newSampleType.transform.GetComponent<VarFinder>().label.SetText(sampleType.sampleTypeName);
