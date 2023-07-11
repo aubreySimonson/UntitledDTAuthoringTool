@@ -23,6 +23,8 @@ public class ComponentsMenu : MonoBehaviour
     public GameObject componentPrefab;
     public GeneratorMenu generatorMenu;
 
+    public GameObject camera;//main camera, for the menus to face towards when generated
+
 
     //positioning stuff
     public float currentY;//where we put the most recent menu option
@@ -33,6 +35,9 @@ public class ComponentsMenu : MonoBehaviour
         StartCoroutine(WaitForParentInfo());
         if(generatorMenu == null){
             generatorMenu = gameObject.GetComponent<GeneratorMenu>();
+        }
+        if(camera == null){
+          camera = GameObject.FindWithTag("MainCamera");
         }
     }
 
@@ -47,6 +52,8 @@ public class ComponentsMenu : MonoBehaviour
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newComponent.transform.parent = gameObject.transform;
         newComponent.transform.localPosition = new Vector3(-0.25f, currentY, 0.0f);
+        //newComponent.transform.LookAt(Vector3.zero);
+        newComponent.transform.rotation = newComponent.transform.parent.rotation;
         currentY-=yInterval;
         //change the label to the name-- there must be better ways of doing this...
         newComponent.transform.GetComponent<VarFinder>().label.SetText(component.componentName);
