@@ -13,4 +13,6 @@ public class SampleTypeFloat : SampleType
     public float maxVal;
     public float meanVal;
     public float total;//mostly useful for calculating the average
+
+    public float lastSampleValue;
 }

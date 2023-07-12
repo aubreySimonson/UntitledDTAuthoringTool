@@ -194,13 +194,31 @@ public class MTConnectParser : MonoBehaviour
       //increase the number of samples we've found
       thisSampleType.numberOfSamples++;
 
-      //eventually bother with time stamp things here
+      //time stamp things
+      bool updateVal = false;//flag for a few lines later
+      try{
+        System.DateTime timeStamp = System.DateTime.Parse(childNode.Attributes["timestamp"].Value);
+        if(thisSampleType.lastTimeStamp == null || timeStamp>thisSampleType.lastTimeStamp){
+          Debug.Log("timestamp: " + timeStamp);
+          thisSampleType.lastTimeStamp = timeStamp;
+          if(thisSampleType is SampleTypeFloat){
+            updateVal = true;
+          }//end if
+        }//end if
+      }//end try
+      catch{
+        Debug.Log("no correctly formatted timestamp for this sample");
+      }
+
 
       //special things we only do for floats
       if(thisSampleType is SampleTypeFloat){
         float f = float.Parse(childNode.InnerText);
         SampleTypeFloat thisSampleTypeFloat = (SampleTypeFloat)thisSampleType;
         thisSampleTypeFloat.total += f;
+        if(updateVal){
+          thisSampleTypeFloat.lastSampleValue = f;
+        }
         if(f>thisSampleTypeFloat.maxVal){
           thisSampleTypeFloat.maxVal = f;
         }

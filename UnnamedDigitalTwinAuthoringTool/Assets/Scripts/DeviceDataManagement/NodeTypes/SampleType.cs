@@ -18,7 +18,7 @@ public class SampleType : AbstractNode
     //saving refs to time stamps and values here, rather than asking lastSample  for them
     //is only a choice you're making for efficiency reasons.
     //If it turns out to not be efficient, don't do it that way.
-    public string lastTimeStamp;//time stamp of most recent sample
+    public System.DateTime lastTimeStamp;//time stamp of most recent sample
     public Sample lastSample;//most recent sample
     public AbstractValue lastSampleValue;
 
