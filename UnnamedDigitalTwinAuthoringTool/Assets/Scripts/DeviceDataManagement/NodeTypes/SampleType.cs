@@ -23,5 +23,5 @@ public class SampleType : AbstractNode
     public AbstractValue lastSampleValue;
 
     //information about samples in aggregate:
-    public int numberOfSamples;
+    public int numberOfSamples = 0;//initialize at 0
 }

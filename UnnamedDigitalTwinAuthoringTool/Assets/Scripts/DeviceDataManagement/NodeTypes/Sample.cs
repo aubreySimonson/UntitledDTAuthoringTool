@@ -8,4 +8,5 @@ public class Sample : AbstractNode
     public string sequence;
     public string dataItemId;
     public string timeStamp;
+    public int numberOfSamples;
 }
