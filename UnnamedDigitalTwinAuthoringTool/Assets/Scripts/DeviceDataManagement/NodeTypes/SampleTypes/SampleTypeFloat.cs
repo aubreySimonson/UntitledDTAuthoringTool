@@ -9,7 +9,10 @@ using UnityEngine;
 
 public class SampleTypeFloat : SampleType
 {
-    public float minValue;
-    public float maxValue;
-    public float meanValue;
+    public float minVal;
+    public float maxVal;
+    public float meanVal;
+    public float total;//mostly useful for calculating the average
+
+    public float lastSampleValue;
 }
