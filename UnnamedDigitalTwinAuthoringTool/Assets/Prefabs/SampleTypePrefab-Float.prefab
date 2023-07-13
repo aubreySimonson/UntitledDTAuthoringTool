@@ -4466,7 +4466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2682557198857611836
 Transform:
   m_ObjectHideFlags: 0
@@ -5580,6 +5580,7 @@ GameObject:
   - component: {fileID: 627997054106635376}
   - component: {fileID: 6517209590164640970}
   - component: {fileID: 4784063088855841287}
+  - component: {fileID: 7096352096479343754}
   m_Layer: 0
   m_Name: SampleTypePrefab-Float
   m_TagString: Untagged
@@ -5721,6 +5722,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.55, y: 0.1, z: 0.1}
   m_Center: {x: 0.23, y: 0, z: 0}
+--- !u!114 &7096352096479343754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7565784349999557400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11dd237fba3834105bb9f23a46d7637d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLabel: {fileID: 0}
+  minLabel: {fileID: 0}
+  meanLabel: {fileID: 0}
+  lastLabel: {fileID: 0}
+  timeStampLabel: {fileID: 0}
+  totalLabel: {fileID: 0}
+  associatedNode: {fileID: 0}
 --- !u!1 &7589362254671633944
 GameObject:
   m_ObjectHideFlags: 0
