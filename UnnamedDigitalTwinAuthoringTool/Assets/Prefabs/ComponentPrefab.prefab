@@ -1363,6 +1363,7 @@ MonoBehaviour:
   parent: {fileID: 3494559239642672317}
   allSampleTypes: []
   sampleTypePrefab: {fileID: 8622038507283267499, guid: 4b96a892b62a643649f82413c5372d7a, type: 3}
+  floatPrefab: {fileID: 7565784349999557400, guid: b2eb6fa82c5c04dbbbd00929481c10d0, type: 3}
   generatorMenu: {fileID: 2139743073438220739}
   camera: {fileID: 0}
   currentY: -0.1
@@ -2915,6 +2916,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6493726423831547796}
+        m_TargetAssemblyTypeName: SeeMoreButton, Assembly-CSharp
+        m_MethodName: SeeMoreOrLess
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnselect:
     m_PersistentCalls:
       m_Calls: []
@@ -2936,7 +2949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55f66e8c51f92485c9589b114e704656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thingToToggle: {fileID: 0}
+  thingToToggle: {fileID: 2598004519382282742}
   label: {fileID: 6493726422028205369}
 --- !u!1 &6535911573247826191
 GameObject:

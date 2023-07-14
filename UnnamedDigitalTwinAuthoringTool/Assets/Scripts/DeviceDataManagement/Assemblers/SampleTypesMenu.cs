@@ -19,7 +19,7 @@ public class SampleTypesMenu : MonoBehaviour
     public AbstractNode parentNode;
     public GameObject parent;
     public List<AbstractNode> allSampleTypes;//only the ones which are children of parent component
-    public GameObject sampleTypePrefab;
+    public GameObject sampleTypePrefab, floatPrefab;
     public GeneratorMenu generatorMenu;
 
     public GameObject camera;//main camera, for the menus to face towards when generated
@@ -43,7 +43,14 @@ public class SampleTypesMenu : MonoBehaviour
     public void AssembleSamples(){
       FindSamples(parentNode);
       foreach(SampleType sampleType in allSampleTypes){
-        GameObject newSampleType = Instantiate(sampleTypePrefab);
+        GameObject newSampleType;
+        if(sampleType is SampleTypeFloat){
+          newSampleType = Instantiate(floatPrefab);
+          newSampleType.GetComponent<FloatEditMenu>().associatedNode = (SampleTypeFloat)sampleType;//somewhat fragile
+        }
+        else{
+          newSampleType = Instantiate(sampleTypePrefab);
+        }
         generatorMenu.menuItems.Add(newSampleType);
         //...and then you need to do some magic to make them stack correctly, and get the name right...
         newSampleType.transform.parent = gameObject.transform;

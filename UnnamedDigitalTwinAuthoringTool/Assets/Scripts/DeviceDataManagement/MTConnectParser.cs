@@ -199,7 +199,7 @@ public class MTConnectParser : MonoBehaviour
       try{
         System.DateTime timeStamp = System.DateTime.Parse(childNode.Attributes["timestamp"].Value);
         if(thisSampleType.lastTimeStamp == null || timeStamp>thisSampleType.lastTimeStamp){
-          Debug.Log("timestamp: " + timeStamp);
+          //Debug.Log("timestamp: " + timeStamp);
           thisSampleType.lastTimeStamp = timeStamp;
           if(thisSampleType is SampleTypeFloat){
             updateVal = true;

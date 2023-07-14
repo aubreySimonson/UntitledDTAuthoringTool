@@ -4288,7 +4288,7 @@ GameObject:
   - component: {fileID: 6082664231057903449}
   - component: {fileID: 2380800549068728448}
   m_Layer: 0
-  m_Name: MeanVal
+  m_Name: MaxVal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4466,7 +4466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2682557198857611836
 Transform:
   m_ObjectHideFlags: 0
@@ -5734,12 +5734,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dd237fba3834105bb9f23a46d7637d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLabel: {fileID: 0}
-  minLabel: {fileID: 0}
-  meanLabel: {fileID: 0}
-  lastLabel: {fileID: 0}
-  timeStampLabel: {fileID: 0}
-  totalLabel: {fileID: 0}
+  maxLabel: {fileID: 2380800549068728448}
+  minLabel: {fileID: 5644399174619662258}
+  meanLabel: {fileID: 4565555663572533825}
+  lastLabel: {fileID: 1398878315161461042}
+  timeStampLabel: {fileID: 2436046297329988776}
+  totalLabel: {fileID: 6451386294503098713}
   associatedNode: {fileID: 0}
 --- !u!1 &7589362254671633944
 GameObject:
