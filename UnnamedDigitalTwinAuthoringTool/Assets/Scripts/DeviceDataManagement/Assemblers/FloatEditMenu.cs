@@ -48,9 +48,9 @@ public class FloatEditMenu : MonoBehaviour
             //update label
             timeStampLabel.SetText(associatedNode.lastTimeStamp.ToString());
         }
-        if(IsDefaultText(totalLabel.text) || float.Parse(totalLabel.text)!=associatedNode.total){
+        if(IsDefaultText(totalLabel.text) || float.Parse(totalLabel.text)!=associatedNode.numberOfSamples){
             //update label
-            totalLabel.SetText(associatedNode.total.ToString());
+            totalLabel.SetText(associatedNode.numberOfSamples.ToString());
         }
     }
 
