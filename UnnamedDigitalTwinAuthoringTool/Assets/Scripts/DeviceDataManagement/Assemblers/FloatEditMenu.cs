@@ -11,17 +11,46 @@ using TMPro;
 public class FloatEditMenu : MonoBehaviour
 {
     public TextMeshPro maxLabel, minLabel, meanLabel, lastLabel, timeStampLabel, totalLabel;
-    public SampleTypeFloat associatedNode;//figuring out how to give this the node it needs will be... rough
+    public SampleTypeFloat associatedNode;
+
+    //each of the prefabs should have an abstract representation option
+    private List<AbstractRepresentation> representationOptions;
+    public List<GameObject> representationPrefabs;
+    public GameObject menuOptionPrefab;
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         StartCoroutine(WaitForNodeInfo());
+
+        representationOptions = new List<AbstractRepresentation>();
+        //check that all representation prefabs have an abstract representation-- otherwise throw them away
+        foreach(GameObject repPrefab in representationPrefabs){
+            if(repPrefab.GetComponent<AbstractRepresentation>() == null){
+                representationPrefabs.Remove(repPrefab);
+            }
+            else{
+                representationOptions.Add(repPrefab.GetComponent<AbstractRepresentation>());
+            }
+        }
     }
 
     IEnumerator WaitForNodeInfo()
     {
         yield return new WaitUntil(() => associatedNode != null);
         UpdateMenu();
+        CreateRepresentationsMenu();
+    }
+
+    public void CreateRepresentationsMenu(){
+        foreach(GameObject rep in representationPrefabs){
+            //create the menu option
+            GameObject menuOption = Instantiate(menuOptionPrefab);
+            //put it where it goes
+            //make the button on the menu option be to instantiate a copy of this thing
+            menuOptionPrefab.GetComponent<RepresentationMenuOption>().repPrefab = rep;
+            menuOptionPrefab.GetComponent<RepresentationMenuOption>().associatedNode = associatedNode;
+        }
+
     }
 
     //this should get called any time the information might have changed. 
