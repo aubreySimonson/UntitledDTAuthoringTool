@@ -54,6 +54,13 @@ public class FloatEditMenu : MonoBehaviour
             menuOption.transform.localScale = new Vector3(3.0f, 2.5f, 0.1f);
             menuOption.transform.rotation = repMenu.transform.rotation;
             currentY-=yInterval;
+
+            //change the label to the name-- there must be better ways of doing this...
+            //god, the naming.
+            AbstractRepresentation representation = rep.GetComponent<AbstractRepresentation>();
+            if(representation is SimpleFloatRepresentation){
+                menuOption.transform.GetComponent<VarFinder>().label.SetText("Simple Float");
+            }
             //make the button on the menu option be to instantiate a copy of this thing
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().repPrefab = rep;
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().associatedNode = associatedNode;
