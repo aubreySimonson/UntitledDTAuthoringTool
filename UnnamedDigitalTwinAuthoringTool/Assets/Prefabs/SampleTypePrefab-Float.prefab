@@ -5744,6 +5744,9 @@ MonoBehaviour:
   representationPrefabs:
   - {fileID: 3114528008682339073, guid: 9e9a9dca1bd494cb399182f2fff1fd1a, type: 3}
   menuOptionPrefab: {fileID: 4209398122533396941, guid: d88ec4d0992374f99a1142d60831fc2d, type: 3}
+  repMenu: {fileID: 6350679466426001703}
+  currentY: 0.5
+  yInterval: 0
 --- !u!1 &7589362254671633944
 GameObject:
   m_ObjectHideFlags: 0

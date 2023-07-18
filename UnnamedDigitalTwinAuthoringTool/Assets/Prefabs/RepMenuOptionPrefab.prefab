@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041643529778451420}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.2}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 330355149928954474}
@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 655357343049291881}
   - component: {fileID: 6494980609782761125}
   - component: {fileID: 640670144072916511}
-  - component: {fileID: 1220952162900455634}
   - component: {fileID: -6217739474568056566}
   m_Layer: 0
   m_Name: RepMenuOptionPrefab
@@ -442,7 +441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4209398122533396941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1541, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8722421129149228203}
@@ -554,19 +553,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   label: {fileID: 5767909981503607255}
---- !u!65 &1220952162900455634
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4209398122533396941}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.55, y: 0.1, z: 0.1}
-  m_Center: {x: 0.23, y: 0, z: 0}
 --- !u!114 &-6217739474568056566
 MonoBehaviour:
   m_ObjectHideFlags: 0

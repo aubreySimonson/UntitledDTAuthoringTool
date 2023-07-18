@@ -17,6 +17,9 @@ public class FloatEditMenu : MonoBehaviour
     private List<AbstractRepresentation> representationOptions;
     public List<GameObject> representationPrefabs;
     public GameObject menuOptionPrefab;
+    public GameObject repMenu;
+    public float currentY = 0.5f;//where we put the last menu option
+    public float yInterval;//amount to move every menu option down by
     // Start is called before the first frame update
     void Start()
     {        
@@ -46,6 +49,11 @@ public class FloatEditMenu : MonoBehaviour
             //create the menu option
             GameObject menuOption = Instantiate(menuOptionPrefab);
             //put it where it goes
+            menuOption.transform.parent = repMenu.transform;
+            menuOption.transform.localPosition = new Vector3(0.03f, currentY, 0.0f);
+            menuOption.transform.localScale = new Vector3(3.0f, 2.5f, 0.1f);
+            menuOption.transform.rotation = repMenu.transform.rotation;
+            currentY-=yInterval;
             //make the button on the menu option be to instantiate a copy of this thing
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().repPrefab = rep;
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().associatedNode = associatedNode;
