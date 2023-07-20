@@ -18,6 +18,7 @@ public class FloatEditMenu : MonoBehaviour
     public List<GameObject> representationPrefabs;
     public GameObject menuOptionPrefab;
     public GameObject repMenu;
+    public GameObject representationCollector;
     public float currentY = 0.5f;//where we put the last menu option
     public float yInterval;//amount to move every menu option down by
     // Start is called before the first frame update
@@ -64,6 +65,7 @@ public class FloatEditMenu : MonoBehaviour
             //make the button on the menu option be to instantiate a copy of this thing
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().repPrefab = rep;
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().associatedNode = associatedNode;
+            menuOptionPrefab.GetComponent<RepresentationMenuOption>().representationCollector = representationCollector;
         }
 
     }
