@@ -49,6 +49,7 @@ public class FloatEditMenu : MonoBehaviour
         foreach(GameObject rep in representationPrefabs){
             //create the menu option
             GameObject menuOption = Instantiate(menuOptionPrefab);
+            menuOptionPrefab.GetComponent<RepresentationMenuOption>().representationCollector = representationCollector;
             //put it where it goes
             menuOption.transform.parent = repMenu.transform;
             menuOption.transform.localPosition = new Vector3(0.03f, currentY, 0.0f);
@@ -65,7 +66,6 @@ public class FloatEditMenu : MonoBehaviour
             //make the button on the menu option be to instantiate a copy of this thing
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().repPrefab = rep;
             menuOptionPrefab.GetComponent<RepresentationMenuOption>().associatedNode = associatedNode;
-            menuOptionPrefab.GetComponent<RepresentationMenuOption>().representationCollector = representationCollector;
         }
 
     }
