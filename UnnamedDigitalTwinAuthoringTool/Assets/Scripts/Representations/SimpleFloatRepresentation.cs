@@ -7,7 +7,7 @@ using TMPro;
 public class SimpleFloatRepresentation : AbstractRepresentation
 {
 
-    public TextMeshPro label;
+    public TextMeshPro display;
 
     //Spaghetti, but might be useful when all of the parts do actually have to talk to eachother
     public SampleTypeFloat underlyingNode;
@@ -15,17 +15,19 @@ public class SimpleFloatRepresentation : AbstractRepresentation
     //menus should call this after instantiating the relevant prefab. 
     //this is absolutely feral data architecture and should be refactored later
 
-    public void Initialize(SampleTypeFloat node){
-        SetUnderlyingNode(node);
-        SetLabelValue(node.lastSampleValue);
-        //there may be a point in time where we want to do other things here?
+    public void Initialize(SampleTypeFloat associatedNode){
+        display.text = "initialize was called";
+        SetUnderlyingNode(associatedNode);
+        display.text = "underlying node set";
+        SetDisplayValue(associatedNode.lastSampleValue);
+        gameObject.transform.localScale = new Vector3(0.022f, 0.022f, 0.022f);
     }
-    public void SetLabelValue(string newValue){
-        label.text = newValue;
+    public void SetDisplayValue(string newValue){
+        display.text = newValue;
     }
 
-    public void SetLabelValue(float newValue){
-        label.text = newValue.ToString();
+    public void SetDisplayValue(float newValue){
+        display.text = newValue.ToString();
     }
 
     public void SetUnderlyingNode(SampleTypeFloat node){

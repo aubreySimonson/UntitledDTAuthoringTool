@@ -46,10 +46,12 @@ public class FloatEditMenu : MonoBehaviour
     }
 
     public void CreateRepresentationsMenu(){
+        Debug.Log("Create representation meny called for ", this);
         foreach(GameObject rep in representationPrefabs){
             //create the menu option
             GameObject menuOption = Instantiate(menuOptionPrefab);
-            menuOptionPrefab.GetComponent<RepresentationMenuOption>().representationCollector = representationCollector;
+            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector;
+            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().associatedNode = associatedNode;
             //put it where it goes
             menuOption.transform.parent = repMenu.transform;
             menuOption.transform.localPosition = new Vector3(0.03f, currentY, 0.0f);
@@ -57,15 +59,11 @@ public class FloatEditMenu : MonoBehaviour
             menuOption.transform.rotation = repMenu.transform.rotation;
             currentY-=yInterval;
 
-            //change the label to the name-- there must be better ways of doing this...
-            //god, the naming.
+            //change the label to the name
             AbstractRepresentation representation = rep.GetComponent<AbstractRepresentation>();
-            if(representation is SimpleFloatRepresentation){
-                menuOption.transform.GetComponent<VarFinder>().label.SetText("Simple Float");
-            }
+            menuOption.transform.GetComponent<VarFinder>().label.SetText(representation.name);
             //make the button on the menu option be to instantiate a copy of this thing
-            menuOptionPrefab.GetComponent<RepresentationMenuOption>().repPrefab = rep;
-            menuOptionPrefab.GetComponent<RepresentationMenuOption>().associatedNode = associatedNode;
+            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationPrefab = rep;
         }
 
     }

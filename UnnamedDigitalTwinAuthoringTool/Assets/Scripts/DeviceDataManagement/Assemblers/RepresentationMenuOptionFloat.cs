@@ -1,21 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;//remove when you're done debugging
 
-public class RepresentationMenuOption : MonoBehaviour
+public class RepresentationMenuOptionFloat : MonoBehaviour
 {
-    public GameObject repPrefab;
-    public SampleType associatedNode;
+    //clearly expose poke button
     public GameObject representationCollector;
-    public void InstantiateRep(){
-        GameObject newRepresentation = Instantiate(repPrefab);
+    public GameObject representationPrefab;
+    public SampleTypeFloat associatedNode;
+
+    public void InstantiateRepresentation(){
+        GameObject newRepresentation = Instantiate(representationPrefab);
         newRepresentation.transform.parent = gameObject.transform;
         newRepresentation.transform.localPosition = new Vector3(0.25f, -0.04f, 0.0f);
         newRepresentation.transform.rotation = gameObject.transform.parent.rotation;
         if(representationCollector!=null){
             newRepresentation.transform.parent = representationCollector.transform;
         }
-        newRepresentation.transform.localScale = new Vector3(0.022f, 0.022f, 0.022f);
+
+        //this may still not work
+        //if it doesn't, add another layer of stupid inheritance for just representations for floats
         newRepresentation.GetComponent<AbstractRepresentation>().Initialize(associatedNode);
     }
+
 }

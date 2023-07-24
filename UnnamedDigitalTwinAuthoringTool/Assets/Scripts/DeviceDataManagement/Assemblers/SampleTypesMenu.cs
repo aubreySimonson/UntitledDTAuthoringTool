@@ -65,7 +65,7 @@ public class SampleTypesMenu : MonoBehaviour
         allSampleTypes.Add(thisNode);
       }
       else{
-        if(thisNode.childNodes[0]!=null){
+        if(thisNode.childNodes.Count!=0){
           foreach(AbstractNode childNode in thisNode.childNodes){//not relying on the scene hierarchy
             FindSamples(childNode);
           }//end foreach

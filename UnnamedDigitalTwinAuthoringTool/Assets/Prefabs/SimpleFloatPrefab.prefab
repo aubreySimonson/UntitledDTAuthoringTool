@@ -188,7 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0e3f6be0bcf494d8a328d69f2856de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: {fileID: 7601580321716174964}
+  name: Simple Float
+  display: {fileID: 7601580321716174964}
   underlyingNode: {fileID: 0}
 --- !u!114 &8471890471318056561
 MonoBehaviour:

@@ -19,8 +19,6 @@ public class SampleType : AbstractNode
     //is only a choice you're making for efficiency reasons.
     //If it turns out to not be efficient, don't do it that way.
     public System.DateTime lastTimeStamp;//time stamp of most recent sample
-    public Sample lastSample;//most recent sample
-    public AbstractValue lastSampleValue;
 
     //information about samples in aggregate:
     public int numberOfSamples = 0;//initialize at 0

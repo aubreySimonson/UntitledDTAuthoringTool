@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 /// <summary>
 /// Abstract class which all representations should inherit from.
 /// Mostly for being able to put them all in a list of the same type--
@@ -12,8 +13,9 @@ using UnityEngine;
 
 public class AbstractRepresentation : MonoBehaviour
 {
+    public string name;//what name should we display in the menu?
     //representations should generally be able to set themselves up from just this information
     public void Initialize(SampleType associatedNode){
 
-    }
+    }   
 }
