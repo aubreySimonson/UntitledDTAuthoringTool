@@ -9,6 +9,14 @@ public class RepresentationMenuOptionFloat : MonoBehaviour
     public GameObject representationCollector;
     public GameObject representationPrefab;
     public SampleTypeFloat associatedNode;
+    public bool testInstantiateRep = false;
+
+    private void Update() {
+        if(testInstantiateRep){
+            InstantiateRepresentation();
+            testInstantiateRep=false;
+        }    
+    }
 
     public void InstantiateRepresentation(){
         GameObject newRepresentation = Instantiate(representationPrefab);
@@ -19,9 +27,9 @@ public class RepresentationMenuOptionFloat : MonoBehaviour
             newRepresentation.transform.parent = representationCollector.transform;
         }
 
-        //this may still not work
-        //if it doesn't, add another layer of stupid inheritance for just representations for floats
-        newRepresentation.GetComponent<AbstractRepresentation>().Initialize(associatedNode);
+        //this whole project is really a first attempt at using polymorphism in a meaningful way,
+        //and it is at best going medium-well
+        newRepresentation.GetComponent<FloatRepresentation>().Initialize(associatedNode);
     }
 
 }

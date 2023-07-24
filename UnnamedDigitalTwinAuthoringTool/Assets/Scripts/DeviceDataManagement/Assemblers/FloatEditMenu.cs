@@ -46,7 +46,6 @@ public class FloatEditMenu : MonoBehaviour
     }
 
     public void CreateRepresentationsMenu(){
-        Debug.Log("Create representation meny called for ", this);
         foreach(GameObject rep in representationPrefabs){
             //create the menu option
             GameObject menuOption = Instantiate(menuOptionPrefab);

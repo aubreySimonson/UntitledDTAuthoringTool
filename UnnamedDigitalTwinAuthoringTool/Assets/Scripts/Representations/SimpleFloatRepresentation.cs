@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 
-public class SimpleFloatRepresentation : AbstractRepresentation
+public class SimpleFloatRepresentation : FloatRepresentation
 {
 
     public TextMeshPro display;
@@ -15,7 +15,7 @@ public class SimpleFloatRepresentation : AbstractRepresentation
     //menus should call this after instantiating the relevant prefab. 
     //this is absolutely feral data architecture and should be refactored later
 
-    public void Initialize(SampleTypeFloat associatedNode){
+    public override void Initialize(SampleTypeFloat associatedNode){
         display.text = "initialize was called";
         SetUnderlyingNode(associatedNode);
         display.text = "underlying node set";
