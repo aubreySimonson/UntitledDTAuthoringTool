@@ -22,18 +22,23 @@ public class RepresentationMenuOptionFloat : MonoBehaviour
     }
 
     public void InstantiateRepresentation(){
-        GameObject newRepresentation = Instantiate(representationPrefab);
-        newRepresentation.transform.parent = gameObject.transform;
-        newRepresentation.transform.localPosition = new Vector3(0.25f, -0.04f, 0.0f);
-        newRepresentation.transform.rotation = gameObject.transform.parent.rotation;
+        try{
+            GameObject newRepresentation = Instantiate(representationPrefab);
+            newRepresentation.transform.parent = gameObject.transform;
+            newRepresentation.transform.localPosition = new Vector3(0.25f, -0.04f, 0.0f);
+            newRepresentation.transform.rotation = gameObject.transform.parent.rotation;
 
-        //this whole project is really a first attempt at using polymorphism in a meaningful way,
-        //and it is at best going medium-well
-        newRepresentation.GetComponent<FloatRepresentation>().Initialize(associatedNode);
+            //this whole project is really a first attempt at using polymorphism in a meaningful way,
+            //and it is at best going medium-well
+            newRepresentation.GetComponent<FloatRepresentation>().Initialize(associatedNode);
 
-        //we do this last, because somehow this tends to go wrong?
-        if(representationCollector!=null){
-            newRepresentation.transform.parent = representationCollector.transform;
+            //we do this last, because somehow this tends to go wrong?
+            if(representationCollector!=null){
+                newRepresentation.transform.parent = representationCollector.transform;
+            }
+        }
+        catch{
+            //it would be cool to put a little alarm that we turn on when something like this errors out
         }
     }
 
