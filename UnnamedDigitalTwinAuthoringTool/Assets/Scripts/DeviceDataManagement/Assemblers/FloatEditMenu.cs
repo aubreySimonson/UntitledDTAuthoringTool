@@ -11,17 +11,69 @@ using TMPro;
 public class FloatEditMenu : MonoBehaviour
 {
     public TextMeshPro maxLabel, minLabel, meanLabel, lastLabel, timeStampLabel, totalLabel;
-    public SampleTypeFloat associatedNode;//figuring out how to give this the node it needs will be... rough
+    public SampleTypeFloat associatedNode;
+
+    //each of the prefabs should have an abstract representation option
+    private List<AbstractRepresentation> representationOptions;
+    public List<GameObject> representationPrefabs;
+    public GameObject menuOptionPrefab;
+    public GameObject repMenu;
+    public GameObject representationCollector;
+    public float currentY = 0.5f;//where we put the last menu option
+    public float yInterval;//amount to move every menu option down by
     // Start is called before the first frame update
     void Start()
-    {
+    {        
         StartCoroutine(WaitForNodeInfo());
+
+        representationOptions = new List<AbstractRepresentation>();
+        //check that all representation prefabs have an abstract representation-- otherwise throw them away
+        foreach(GameObject repPrefab in representationPrefabs){
+            if(repPrefab.GetComponent<AbstractRepresentation>() == null){
+                representationPrefabs.Remove(repPrefab);
+            }
+            else{
+                representationOptions.Add(repPrefab.GetComponent<AbstractRepresentation>());
+            }
+        }
     }
 
     IEnumerator WaitForNodeInfo()
     {
         yield return new WaitUntil(() => associatedNode != null);
         UpdateMenu();
+        CreateRepresentationsMenu();
+    }
+
+    public void CreateRepresentationsMenu(){
+        foreach(GameObject rep in representationPrefabs){
+            //create the menu option
+            GameObject menuOption = Instantiate(menuOptionPrefab);
+
+            //the menu options tend to somehow get connected to the... wrong representation collector? 
+            //you have no idea how this is happening
+            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector;
+            if(menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector){
+                Debug.Log("Things make sense");
+            }
+            else{
+                Debug.Log("literally how the fuck");
+            }
+            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().associatedNode = associatedNode;
+            //put it where it goes
+            menuOption.transform.parent = repMenu.transform;
+            menuOption.transform.localPosition = new Vector3(0.03f, currentY, 0.0f);
+            menuOption.transform.localScale = new Vector3(3.0f, 2.5f, 0.1f);
+            menuOption.transform.rotation = repMenu.transform.rotation;
+            currentY-=yInterval;
+
+            //change the label to the name
+            AbstractRepresentation representation = rep.GetComponent<AbstractRepresentation>();
+            menuOption.transform.GetComponent<VarFinder>().label.SetText(representation.name);
+            //make the button on the menu option be to instantiate a copy of this thing
+            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationPrefab = rep;
+        }
+
     }
 
     //this should get called any time the information might have changed. 

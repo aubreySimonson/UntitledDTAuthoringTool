@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Sub-type of sampletype for containing additional information about floats.
 ///
+/// ??--> simonson.au@northeastern.edu
 /// </summary>
 
 public class SampleTypeFloat : SampleType

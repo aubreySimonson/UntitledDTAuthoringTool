@@ -52,7 +52,7 @@ public class DevicesMenu : MonoBehaviour
         //tell the components menu of this device what device to start checking the node tree from. A bit messy.
         newDevice.GetComponentInChildren<ComponentsMenu>(true).parentNode = device;//true = include inactive
         //...and then you need to do some magic to make them stack correctly, and get the name right...
-        newDevice.transform.position = new Vector3(-0.224f, currentY, 1.458f);
+        newDevice.transform.position = new Vector3(-0.224f, currentY, 1.0f);
         newDevice.transform.rotation = Quaternion.identity;//this might not actually do anything because the devices menu is always at a sensible location
         currentY-=yInterval;
         //change the label to the name-- there must be better ways of doing this...

@@ -22,8 +22,6 @@ public class SampleTypesMenu : MonoBehaviour
     public GameObject sampleTypePrefab, floatPrefab;
     public GeneratorMenu generatorMenu;
 
-    public GameObject camera;//main camera, for the menus to face towards when generated
-
 
     //positioning stuff
     public float currentY;//where we put the most recent menu option
@@ -34,9 +32,6 @@ public class SampleTypesMenu : MonoBehaviour
         StartCoroutine(WaitForParentInfo());
         if(generatorMenu == null){
             generatorMenu = gameObject.GetComponent<GeneratorMenu>();
-        }
-        if(camera == null){
-          camera = GameObject.FindWithTag("MainCamera");
         }
     }
 
@@ -70,7 +65,7 @@ public class SampleTypesMenu : MonoBehaviour
         allSampleTypes.Add(thisNode);
       }
       else{
-        if(thisNode.childNodes[0]!=null){
+        if(thisNode.childNodes.Count!=0){
           foreach(AbstractNode childNode in thisNode.childNodes){//not relying on the scene hierarchy
             FindSamples(childNode);
           }//end foreach

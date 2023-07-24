@@ -160,6 +160,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 188696106804643889}
+        m_TargetAssemblyTypeName: SeeMoreButton, Assembly-CSharp
+        m_MethodName: SeeMoreOrLess
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenHover:
     m_PersistentCalls:
       m_Calls: []
@@ -202,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55f66e8c51f92485c9589b114e704656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thingToToggle: {fileID: 0}
+  thingToToggle: {fileID: 7749987709697675742}
   label: {fileID: 188696108742228636}
 --- !u!1 &188696107203030723
 GameObject:
@@ -5601,6 +5613,7 @@ Transform:
   m_Children:
   - {fileID: 3141711814995177086}
   - {fileID: 9019907618241000955}
+  - {fileID: 3797609125220729471}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5741,6 +5754,13 @@ MonoBehaviour:
   timeStampLabel: {fileID: 2436046297329988776}
   totalLabel: {fileID: 6451386294503098713}
   associatedNode: {fileID: 0}
+  representationPrefabs:
+  - {fileID: 3114528008682339073, guid: 9e9a9dca1bd494cb399182f2fff1fd1a, type: 3}
+  menuOptionPrefab: {fileID: 4209398122533396941, guid: d88ec4d0992374f99a1142d60831fc2d, type: 3}
+  repMenu: {fileID: 6350679466426001703}
+  representationCollector: {fileID: 7749987709697675742}
+  currentY: 0.5
+  yInterval: 0
 --- !u!1 &7589362254671633944
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,6 +6199,36 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     ColorTime: 0.1
+--- !u!1 &7749987709697675742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3797609125220729471}
+  m_Layer: 0
+  m_Name: Representations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3797609125220729471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749987709697675742}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7184578873208517026}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7778421332387690634
 GameObject:
   m_ObjectHideFlags: 0
