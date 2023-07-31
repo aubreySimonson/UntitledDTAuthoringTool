@@ -11,7 +11,7 @@ using TMPro;
 public class FloatEditMenu : MonoBehaviour
 {
     public TextMeshPro maxLabel, minLabel, meanLabel, lastLabel, timeStampLabel, totalLabel;
-    public SampleTypeFloat associatedNode;
+    public SampleTypeFloat associatedNode;//this is the right thing, and yet somehow we send representation menu option bad informaiton
 
     //each of the prefabs should have an abstract representation option
     private List<AbstractRepresentation> representationOptions;
@@ -24,8 +24,6 @@ public class FloatEditMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        StartCoroutine(WaitForNodeInfo());
-
         representationOptions = new List<AbstractRepresentation>();
         //check that all representation prefabs have an abstract representation-- otherwise throw them away
         foreach(GameObject repPrefab in representationPrefabs){
@@ -36,6 +34,7 @@ public class FloatEditMenu : MonoBehaviour
                 representationOptions.Add(repPrefab.GetComponent<AbstractRepresentation>());
             }
         }
+        StartCoroutine(WaitForNodeInfo());
     }
 
     IEnumerator WaitForNodeInfo()
@@ -53,12 +52,6 @@ public class FloatEditMenu : MonoBehaviour
             //the menu options tend to somehow get connected to the... wrong representation collector? 
             //you have no idea how this is happening
             menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector;
-            if(menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector){
-                Debug.Log("Things make sense");
-            }
-            else{
-                Debug.Log("literally how the fuck");
-            }
             menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().associatedNode = associatedNode;
             //put it where it goes
             menuOption.transform.parent = repMenu.transform;
