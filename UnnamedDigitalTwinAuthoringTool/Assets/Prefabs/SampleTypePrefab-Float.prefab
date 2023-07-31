@@ -5756,11 +5756,12 @@ MonoBehaviour:
   associatedNode: {fileID: 0}
   representationPrefabs:
   - {fileID: 3114528008682339073, guid: 9e9a9dca1bd494cb399182f2fff1fd1a, type: 3}
+  - {fileID: 3209808816718465439, guid: 26c2742755ca24a898e2875193aeca89, type: 3}
   menuOptionPrefab: {fileID: 4209398122533396941, guid: d88ec4d0992374f99a1142d60831fc2d, type: 3}
   repMenu: {fileID: 6350679466426001703}
   representationCollector: {fileID: 7749987709697675742}
   currentY: 0.5
-  yInterval: 0
+  yInterval: 0.1
 --- !u!1 &7589362254671633944
 GameObject:
   m_ObjectHideFlags: 0

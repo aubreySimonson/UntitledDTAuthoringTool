@@ -20,7 +20,7 @@ public class FloatEditMenu : MonoBehaviour
     public GameObject repMenu;
     public GameObject representationCollector;
     public float currentY = 0.5f;//where we put the last menu option
-    public float yInterval;//amount to move every menu option down by
+    public float yInterval = 0.1f;//amount to move every menu option down by
     // Start is called before the first frame update
     void Start()
     {        
