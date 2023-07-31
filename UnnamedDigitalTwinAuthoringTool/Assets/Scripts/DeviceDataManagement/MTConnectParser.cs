@@ -41,8 +41,8 @@ public class MTConnectParser : MonoBehaviour
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
     //we're setting this here because doing it in the inspector is annoying
-    //filePath = "Assets/Resources/data_ur.xml";
-    filePath = Application.streamingAssetsPath + "/data_ur.xml";
+    //filePath = Application.streamingAssetsPath + "/data_ur.xml";
+    filePath = Application.streamingAssetsPath + "/data_sample_2.xml";
     if(useStaticSampleData){
       ReadStaticSampleData();
     }
@@ -55,7 +55,8 @@ public class MTConnectParser : MonoBehaviour
     //xmlDoc.Load(filePath);
 
     //the following works on both quest and desktop
-    TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+    //TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+    TextAsset textAsset = (TextAsset)Resources.Load("data_sample_2", typeof(TextAsset));
     xmlDoc.LoadXml ( textAsset.text );
     XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
     XmlNode allContent = topLevelNodes[1];

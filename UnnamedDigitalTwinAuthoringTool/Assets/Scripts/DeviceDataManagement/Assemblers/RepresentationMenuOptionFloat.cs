@@ -14,10 +14,17 @@ public class RepresentationMenuOptionFloat : MonoBehaviour
         if(testInstantiateRep){
             InstantiateRepresentation();
             testInstantiateRep=false;
-        }    
+        } 
+           
+        //there's an off by 1 error somewhere. 
+        //the following fix it, though the source is... a mystery
         if(representationCollector != gameObject.transform.GetComponentInParent<FloatEditMenu>().representationCollector){
-            Debug.Log("An impossible thing has happened again");
+            Debug.Log("Representation collector has somehow become something not given to this menu option by the menu. Fixing now.", this);//this happens
             representationCollector = gameObject.transform.GetComponentInParent<FloatEditMenu>().representationCollector;
+        }
+        if(associatedNode != gameObject.transform.GetComponentInParent<FloatEditMenu>().associatedNode){
+            Debug.Log("Associated node has somehow become something not given to this menu option by the menu. Fixing now.", this);//this happens
+            associatedNode = gameObject.transform.GetComponentInParent<FloatEditMenu>().associatedNode;
         }
     }
 

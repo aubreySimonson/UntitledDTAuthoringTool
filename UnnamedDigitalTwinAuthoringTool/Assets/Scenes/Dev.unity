@@ -748,7 +748,7 @@ MonoBehaviour:
   totalNodes: 0
   debugText: {fileID: 0}
   rootNode: {fileID: 0}
-  XMLObject: {fileID: 4900000, guid: 887ee04676bf64f87a4d8814ddab7673, type: 3}
+  XMLObject: {fileID: 4900000, guid: cfec2b5b3407440a8b1815f1eb3f672e, type: 3}
 --- !u!1 &1269131175
 GameObject:
   m_ObjectHideFlags: 0

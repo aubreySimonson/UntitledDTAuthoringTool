@@ -36,7 +36,7 @@ public class SampleTypesMenu : MonoBehaviour
     }
 
     public void AssembleSamples(){
-      FindSamples(parentNode);
+      FindSamples(parentNode);//this is the correct node
       foreach(SampleType sampleType in allSampleTypes){
         GameObject newSampleType;
         if(sampleType is SampleTypeFloat){
@@ -58,7 +58,7 @@ public class SampleTypesMenu : MonoBehaviour
       }
     }
 
-    //how this works is going to be /very/ different from how it was for components...
+    //how this works is /very/ different from how it was for components...
     public void FindSamples(AbstractNode thisNode){
       //this assumes that no sample types will be childen of other sample types
       if(thisNode.gameObject.GetComponent<SampleType>() != null){
