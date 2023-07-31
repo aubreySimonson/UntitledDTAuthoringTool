@@ -6,7 +6,7 @@ public class ThermometerRepresentation : FloatRepresentation
 {
     //Spaghetti, but might be useful when all of the parts do actually have to talk to eachother
     public SampleTypeFloat underlyingNode;
-    private float originalYOffset;
+    private float originalYOffset;//we aren't actually using this right now
     private Renderer rend;
 
     //menus should call this after instantiating the relevant prefab. 
@@ -33,9 +33,18 @@ public class ThermometerRepresentation : FloatRepresentation
     //this shifts the texture offset to move how much is purple
     private void MoveMercury(float newValue){
         //normalize the value
-        float normalizedValue = 0.3f;//eventually make this not fake data
-        Vector2 newOffset = new Vector2(0.0f, originalYOffset + normalizedValue);
+        float normalizedValue = GetNormalizedValue(newValue);//eventually make this not fake data
+        Vector2 newOffset = new Vector2(0.0f, 0.5f + normalizedValue/2.0f);//this is a little hard-coded to our specific texture
         rend.material.mainTextureOffset = newOffset;
+    }
+
+    //takes the actual data value and returns a number between 0 and 1
+    private float GetNormalizedValue(float value){
+        float range = underlyingNode.maxVal-underlyingNode.minVal;
+        //holy fuck the thing you need is linear interpolation-- nope. You need to /get/ t.
+        float normalizedValue = (value-underlyingNode.minVal)/range;
+        Debug.Log("pretty sure the normalized value is " + normalizedValue.ToString());
+        return normalizedValue;
 
     }
 }
