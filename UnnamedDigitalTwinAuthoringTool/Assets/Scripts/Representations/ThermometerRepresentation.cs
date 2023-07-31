@@ -34,7 +34,7 @@ public class ThermometerRepresentation : FloatRepresentation
     private void MoveMercury(float newValue){
         //normalize the value
         float normalizedValue = GetNormalizedValue(newValue);//eventually make this not fake data
-        Vector2 newOffset = new Vector2(0.0f, 0.5f + normalizedValue/2.0f);//this is a little hard-coded to our specific texture
+        Vector2 newOffset = new Vector2(0.0f, normalizedValue/2.0f);//this is a little hard-coded to our specific texture
         rend.material.mainTextureOffset = newOffset;
     }
 
