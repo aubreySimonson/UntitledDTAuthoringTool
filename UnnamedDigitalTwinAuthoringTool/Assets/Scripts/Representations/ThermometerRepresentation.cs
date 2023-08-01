@@ -8,6 +8,8 @@ public class ThermometerRepresentation : FloatRepresentation
     public SampleTypeFloat underlyingNode;
     private float originalYOffset;//we aren't actually using this right now
     private Renderer rend;
+    public GameObject meanLine;
+    public Transform bottom, top;//defines the range of where the mean line can go
 
     //menus should call this after instantiating the relevant prefab. 
     //this is absolutely feral data architecture and should be refactored later
@@ -24,10 +26,21 @@ public class ThermometerRepresentation : FloatRepresentation
 
     public void SetDisplayValue(float newValue){
         MoveMercury(newValue);
+        SetMeanLine();
     }
 
     public void SetUnderlyingNode(SampleTypeFloat node){
         underlyingNode = node;
+    }
+
+    public void Recalculate(){
+        MoveMercury(underlyingNode.lastSampleValue);
+        SetMeanLine();
+
+    }
+
+    public void SetMeanLine(){
+        meanLine.transform.position = Vector3.Lerp(bottom.position, top.position, GetNormalizedValue(underlyingNode.meanVal));
     }
 
     //this shifts the texture offset to move how much is purple
