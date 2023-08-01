@@ -14,7 +14,6 @@ public class SimpleFloatRepresentation : FloatRepresentation
 
     //menus should call this after instantiating the relevant prefab. 
     //this is absolutely feral data architecture and should be refactored later
-
     public override void Initialize(SampleTypeFloat associatedNode){
         display.text = "initialize was called";
         SetUnderlyingNode(associatedNode);

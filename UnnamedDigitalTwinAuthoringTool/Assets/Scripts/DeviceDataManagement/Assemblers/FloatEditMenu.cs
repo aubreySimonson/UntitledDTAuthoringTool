@@ -20,7 +20,7 @@ public class FloatEditMenu : MonoBehaviour
     public GameObject repMenu;
     public GameObject representationCollector;
     public float currentY = 0.5f;//where we put the last menu option
-    public float yInterval;//amount to move every menu option down by
+    public float yInterval = 0.1f;//amount to move every menu option down by
     // Start is called before the first frame update
     void Start()
     {        
@@ -46,13 +46,14 @@ public class FloatEditMenu : MonoBehaviour
 
     public void CreateRepresentationsMenu(){
         foreach(GameObject rep in representationPrefabs){
+            Debug.Log("Creating a menu option for a rep named: " + rep.name, this);
             //create the menu option
             GameObject menuOption = Instantiate(menuOptionPrefab);
 
             //the menu options tend to somehow get connected to the... wrong representation collector? 
             //you have no idea how this is happening
-            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector;
-            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().associatedNode = associatedNode;
+            menuOption.GetComponent<RepresentationMenuOptionFloat>().representationCollector = representationCollector;
+            menuOption.GetComponent<RepresentationMenuOptionFloat>().associatedNode = associatedNode;
             //put it where it goes
             menuOption.transform.parent = repMenu.transform;
             menuOption.transform.localPosition = new Vector3(0.03f, currentY, 0.0f);
@@ -63,8 +64,9 @@ public class FloatEditMenu : MonoBehaviour
             //change the label to the name
             AbstractRepresentation representation = rep.GetComponent<AbstractRepresentation>();
             menuOption.transform.GetComponent<VarFinder>().label.SetText(representation.name);
+            Debug.Log("The label for this representation says " + representation.name, this);
             //make the button on the menu option be to instantiate a copy of this thing
-            menuOptionPrefab.GetComponent<RepresentationMenuOptionFloat>().representationPrefab = rep;
+            menuOption.GetComponent<RepresentationMenuOptionFloat>().representationPrefab = rep;
         }
 
     }
