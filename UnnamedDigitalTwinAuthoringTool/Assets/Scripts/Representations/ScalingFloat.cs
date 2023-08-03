@@ -43,7 +43,7 @@ public class ScalingFloat : FloatRepresentation
 
     public void SetScale(float newValue){
         //50/50 shot max and min are backwards
-        display.transform.localScale = Vector3.Lerp(maxScaleVector, minScaleVector, GetNormalizedValue(newValue));
+        display.transform.localScale = Vector3.Lerp(minScaleVector, maxScaleVector, GetNormalizedValue(newValue));
     }
 
     //this whole function exists because doing this in the code block where you're actually doing the lerping is super annoying
@@ -54,7 +54,7 @@ public class ScalingFloat : FloatRepresentation
 
     //takes the actual data value and returns a number between 0 and 1
     private float GetNormalizedValue(float value){
-        float range = -1.0f;
+        float range = -0.001f;//prevents /0 errors, causes us to still get /something/ out
         float normalizedValue = 0.1f;//if out value is exactly the mean, return this. Technically that means it shrinks with slight increases in distance from the mean, but frankly I don't really care.
         if(value > underlyingNode.meanVal){
             range = underlyingNode.maxVal - underlyingNode.meanVal;

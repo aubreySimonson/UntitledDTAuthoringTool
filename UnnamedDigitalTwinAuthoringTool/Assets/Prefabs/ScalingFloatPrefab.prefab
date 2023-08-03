@@ -312,6 +312,6 @@ MonoBehaviour:
   name: Scaling Float
   display: {fileID: 4611432423340725718}
   originalLocalScale: {x: 0, y: 0, z: 0}
-  maxScale: 1
-  minScale: 0.01
+  maxScale: 0.2
+  minScale: 0.02
   underlyingNode: {fileID: 0}
