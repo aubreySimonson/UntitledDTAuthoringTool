@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 ///<summary>
-///Part of Untitled Digital Twin Authoring Tool
+///Part of MiRIAD, an authoring tool for digital twins
+///
+///This script goes on the 'create' button of menus.
+///???-->followspotfour@gmail.com
 ///</summary>
 public class CreateButton : MonoBehaviour
 {

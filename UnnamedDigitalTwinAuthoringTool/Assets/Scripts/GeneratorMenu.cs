@@ -4,7 +4,7 @@ using UnityEngine;
 
 ///<summary>
 ///Part of Untitled Digital Twin Authoring Tool
-///This script goes on menus were grabbing an object and removing it from the menu makes it a persistent thing.
+///This script goes on menus where grabbing an object and removing it from the menu makes it a persistent thing.
 ///</summary>
 
 public class GeneratorMenu : MonoBehaviour
