@@ -34,7 +34,6 @@ public class DevicesMenu : MonoBehaviour
     void Start()
     {
       StartCoroutine(WaitForRootNode());
-      rootNode = parser.rootNode;
       currentY = 1.428f;
       //AssembleDevices();
       if(parser == null){
@@ -50,6 +49,7 @@ public class DevicesMenu : MonoBehaviour
     IEnumerator WaitForRootNode()
     {
         yield return new WaitUntil(() => parser.rootNode != null);
+        rootNode = parser.rootNode;
         AssembleDevices();
     }
 

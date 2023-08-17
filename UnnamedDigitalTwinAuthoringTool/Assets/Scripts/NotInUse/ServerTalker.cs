@@ -44,8 +44,8 @@ public class ServerTalker : MonoBehaviour
 
 
 
-    public void GetDataSnapshot(){//there's a technical term for this, and this is probably not the right one
+    public void GetDataSnapshot(string url){//there's a technical term for this, and this is probably not the right one
       //get the data from the fucking internet
-      StartCoroutine(GetWebData("https://smstestbed.nist.gov/vds/"));
+      StartCoroutine(GetWebData(url));
     }
 }

@@ -18,6 +18,7 @@ public class MTConnectParser : MonoBehaviour
 {
   public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
   public ServerTalker serverTalker;//this is a script where we hide all of our code related to getting anything from the internet.
+  public string remoteUrl = "https://smstestbed.nist.gov/vds/current";
   public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
 
   public GameObject nodePrefab;
@@ -37,10 +38,7 @@ public class MTConnectParser : MonoBehaviour
 
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
-    //we're setting this here because doing it in the inspector is annoying
-    if(useStaticSampleData){
-      ReadStaticSampleData();
-    }
+    ReadSampleData();
   }
 
 
@@ -59,7 +57,7 @@ public class MTConnectParser : MonoBehaviour
       Debug.Log("Total nodes: " + totalNodes);
     }
     else{
-      serverTalker.GetDataSnapshot();//this will then call SetAndReadWebData after it hears back from the server
+      serverTalker.GetDataSnapshot(remoteUrl);//this will then call SetAndReadWebData after it hears back from the server
     }
     
   }

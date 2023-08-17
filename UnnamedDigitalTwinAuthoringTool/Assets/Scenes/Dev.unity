@@ -693,7 +693,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 920579176}
-
+  recording: 0
+  lastFrameData: 
+  recordedData: 
+  parser: {fileID: 1268225020}
 --- !u!1 &1268225019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2019721772260721223, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
@@ -711,7 +714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b0594a55df4409b8e74b75e9a86db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useStaticSampleData: 1
+  useStaticSampleData: 0
+  serverTalker: {fileID: 920579178}
+  remoteUrl: https://smstestbed.nist.gov/vds/current
   fileName: data_ur
   nodePrefab: {fileID: 153911927606555916, guid: ed67a62ae279f4048aea57002267a7a3, type: 3}
   collapseDuplicateSamples: 1
