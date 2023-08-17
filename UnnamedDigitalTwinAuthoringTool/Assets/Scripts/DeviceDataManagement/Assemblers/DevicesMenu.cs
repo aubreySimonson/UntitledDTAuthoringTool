@@ -33,15 +33,24 @@ public class DevicesMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      StartCoroutine(WaitForRootNode());
       rootNode = parser.rootNode;
       currentY = 1.428f;
-      AssembleDevices();
+      //AssembleDevices();
       if(parser == null){
         parser = GameObject.FindObjectOfType<MTConnectParser>();
       }
       if(generatorMenu == null){
         generatorMenu = gameObject.GetComponent<GeneratorMenu>();
       }
+    }
+
+    //we use a co-routine to avoid trying to assemble devices from our little custom data structure
+    //before our custom data structure is ready
+    IEnumerator WaitForRootNode()
+    {
+        yield return new WaitUntil(() => parser.rootNode != null);
+        AssembleDevices();
     }
 
     public void AssembleDevices(){

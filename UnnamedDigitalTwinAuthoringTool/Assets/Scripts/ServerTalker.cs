@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEditor;
+using System.Xml.Serialization;
+using System.IO;
 
 public class ServerTalker : MonoBehaviour
 {
     public Text debugText;
+    public bool recording;
+    public string lastFrameData;
+    public string recordedData;
+    public MTConnectParser parser;
+
+    //You should make a system of recording data, then making an interface from the data you've recorded
+	  //But to do it, you actually have to change how you represent data under the hood a little
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +24,7 @@ public class ServerTalker : MonoBehaviour
         //this will be a text response.
 
         //StartCoroutine(GetWebData("http://localhost:8000/user"));
-        StartCoroutine(GetWebData("https://aubreysimonson.gitlab.io/page/"));//<--this also works--can you print this on the headset?
+        //StartCoroutine(GetWebData("https://smstestbed.nist.gov/vds/"));//<--this works.
     }
 
     IEnumerator GetWebData(string address){
@@ -25,14 +35,17 @@ public class ServerTalker : MonoBehaviour
         Debug.LogError("That wasn't supposed to happen: " + www.error);
       }
       else{
-        Debug.Log(www.downloadHandler.text);
-        debugText.text = www.downloadHandler.text;
+        //Debug.Log(" we got: " + www.downloadHandler.text);
+        lastFrameData = www.downloadHandler.text;
+        debugText.text = lastFrameData;
+        parser.SetAndReadWebData(lastFrameData);
       }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+
+    public void GetDataSnapshot(){//there's a technical term for this, and this is probably not the right one
+      //get the data from the fucking internet
+      StartCoroutine(GetWebData("https://smstestbed.nist.gov/vds/"));
     }
 }

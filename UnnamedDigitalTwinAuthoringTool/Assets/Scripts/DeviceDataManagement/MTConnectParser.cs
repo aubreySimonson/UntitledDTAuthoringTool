@@ -21,6 +21,7 @@ public class MTConnectParser : MonoBehaviour
   //the only thing the parser needs to know is what numbers need updated, and what to put there.
 
   public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
+  public ServerTalker serverTalker;//this is a script where we hide all of our code related to getting anything from the internet.
   public List<AbstractValue> values;//all values that could possibly be updated. maybe trying to have this list at all is unworkable...
   public string filePath;
 
@@ -37,29 +38,50 @@ public class MTConnectParser : MonoBehaviour
   public TextAsset XMLObject;
   StringReader xml;
   string extractedContent;
+  
 
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
     //we're setting this here because doing it in the inspector is annoying
     //filePath = Application.streamingAssetsPath + "/data_ur.xml";
     filePath = Application.streamingAssetsPath + "/data_ur.xml";
-    if(useStaticSampleData){
-      ReadStaticSampleData();
-    }
+    ReadSampleData();
   }
 
-  private void ReadStaticSampleData(){
-    XmlDocument xmlDoc = new XmlDocument();
+
+  private void ReadSampleData(){
 
     //commented out lines below this are a solution that works on desktop but not Quest
     //xmlDoc.Load(filePath);
 
     //the following works on both quest and desktop
     //TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
-    TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
-    xmlDoc.LoadXml ( textAsset.text );
-    XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
+    TextAsset textAsset;
+    if(useStaticSampleData){
+      XmlDocument xmlDoc = new XmlDocument();
+      textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+      xmlDoc.LoadXml ( textAsset.text );
+      XmlNodeList topLevelNodes = xmlDoc.ChildNodes;
+      XmlNode allContent = topLevelNodes[1];
+      CreateNodeGameObject(allContent, true);
+      Debug.Log("Total nodes: " + totalNodes);
+    }
+    else{
+      serverTalker.GetDataSnapshot();//this will then call SetAndReadWebData after it hears back from the server
+    }
+    
+  }
+
+  //spaghetti, but server talker needs to do a coroutine to do a web request, 
+  //and this is how it sends that information back when its done
+  public void SetAndReadWebData(string data){
+    XmlDocument xmlDoc = new XmlDocument();
+    xmlDoc.LoadXml(data);
+    XmlNodeList metaLevelNodes = xmlDoc.ChildNodes;
+    XmlNode topLevelNode = metaLevelNodes[2];//the first 2 are metadata
+    XmlNodeList topLevelNodes = topLevelNode.ChildNodes;
     XmlNode allContent = topLevelNodes[1];
+    Debug.Log("add content was " + allContent);
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
   }
@@ -142,7 +164,7 @@ public class MTConnectParser : MonoBehaviour
   //we hide checking for every possible node type we care about down here
   private AbstractNode AddCorrectNodeType(XmlNode node, GameObject thisNodeGo){
     AbstractNode thisNodeUnity;
-    if(node.Name == "DeviceStream"){
+    if(node.Name == "DeviceStream" || node.Name == "Device"){
       thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
       thisNodeUnity.GetComponent<Device>().deviceName = node.Attributes["name"].Value;//we assume that all devices will have a name in this format. do they?
     }

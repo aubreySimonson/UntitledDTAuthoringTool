@@ -693,6 +693,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 920579176}
+  recording: 0
+  lastFrameData: 
+  recordedData: 
+  parser: {fileID: 1268225020}
 --- !u!1 &950216597
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +744,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b0594a55df4409b8e74b75e9a86db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useStaticSampleData: 1
+  useStaticSampleData: 0
+  serverTalker: {fileID: 920579178}
   values: []
   filePath: 
   nodePrefab: {fileID: 153911927606555916, guid: ed67a62ae279f4048aea57002267a7a3, type: 3}
@@ -858,7 +863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1579750588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1271,6 +1276,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 1987009141}
+  recording: 0
+  lastFrameData: 
+  recordedData: 
+  parser: {fileID: 0}
 --- !u!222 &1987009143
 CanvasRenderer:
   m_ObjectHideFlags: 0
