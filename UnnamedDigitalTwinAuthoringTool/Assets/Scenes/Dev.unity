@@ -465,7 +465,7 @@ PrefabInstance:
       objectReference: {fileID: 1987009141}
     - target: {fileID: 2019721772260721221, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2019721772260721221, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -693,40 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 920579176}
-  recording: 0
-  lastFrameData: 
-  recordedData: 
-  parser: {fileID: 1268225020}
---- !u!1 &950216597
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 950216598}
-  m_Layer: 0
-  m_Name: Devices
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &950216598
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950216597}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!1 &1268225019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2019721772260721223, guid: d280fe56fd4ed45f28095ac72e16fc7e, type: 3}
@@ -744,16 +711,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b0594a55df4409b8e74b75e9a86db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useStaticSampleData: 0
-  serverTalker: {fileID: 920579178}
-  values: []
-  filePath: 
+  useStaticSampleData: 1
+  fileName: data_ur
   nodePrefab: {fileID: 153911927606555916, guid: ed67a62ae279f4048aea57002267a7a3, type: 3}
   collapseDuplicateSamples: 1
   totalNodes: 0
   debugText: {fileID: 0}
   rootNode: {fileID: 0}
-  XMLObject: {fileID: 4900000, guid: 887ee04676bf64f87a4d8814ddab7673, type: 3}
 --- !u!1 &1269131175
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,7 +943,7 @@ Transform:
   - {fileID: 181558924}
   - {fileID: 1269131176}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1644073193
 MonoBehaviour:

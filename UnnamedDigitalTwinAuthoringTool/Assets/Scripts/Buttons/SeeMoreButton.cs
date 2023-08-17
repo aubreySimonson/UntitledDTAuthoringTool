@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
+///<summary>
+///Part of MiRIAD, an authoring tool for digital twins
+///
+///This script goes on the 'see more' button of menus.
+///???-->followspotfour@gmail.com
+///</summary>
 public class SeeMoreButton : MonoBehaviour
 {
   public GameObject thingToToggle;
