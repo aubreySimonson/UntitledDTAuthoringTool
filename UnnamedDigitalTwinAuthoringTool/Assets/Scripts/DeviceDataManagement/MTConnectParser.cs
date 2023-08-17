@@ -16,30 +16,26 @@ using UnityEngine.UI;
 
 public class MTConnectParser : MonoBehaviour
 {
-  //our nice data structure is for interface and people things.
-  //the only thing the parser needs to know is what numbers need updated, and what to put there.
-
   public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
-  public string filePath;
+  public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
 
   public GameObject nodePrefab;
 
   public bool collapseDuplicateSamples;//do this whenever you have a lot of data-- for example, time-series data-- to prevent your computer from freezing
 
   public int totalNodes = 0;//we don't use this information for anything, but it's cool to know
-  public Text debugText;
+  public Text debugText;//leaving this null won't throw errors or break anything
 
   public GameObject rootNode;
 
   //variables for random guesses about how to read xml data on an android device below.
-  public TextAsset XMLObject;
+  private TextAsset XMLObject;
   StringReader xml;
   string extractedContent;
 
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
     //we're setting this here because doing it in the inspector is annoying
-    filePath = Application.streamingAssetsPath + "/data_ur.xml";
     if(useStaticSampleData){
       ReadStaticSampleData();
     }
@@ -48,12 +44,8 @@ public class MTConnectParser : MonoBehaviour
   private void ReadStaticSampleData(){
     XmlDocument xmlDoc = new XmlDocument();
 
-    //commented out lines below this are a solution that works on desktop but not Quest
-    //xmlDoc.Load(filePath);
-
     //the following works on both quest and desktop
-    //TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
-    TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+    TextAsset textAsset = (TextAsset)Resources.Load(fileName, typeof(TextAsset));
     xmlDoc.LoadXml ( textAsset.text );
     XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
     XmlNode allContent = topLevelNodes[1];//we can know that topLevelNodes will be a header and content because of the standard
@@ -188,7 +180,7 @@ public class MTConnectParser : MonoBehaviour
       else{//if we've seen this sampletype before, find it
         thisSampleType = FindSampleTypeByName(sampleTypes, childNode.Name);
       }
-      //then, now that we know that the sample type exists, do things with the data from this sample
+      //then, now that we know that the sample type exists, do things with the data from this sample:
       //increase the number of samples we've found
       thisSampleType.numberOfSamples++;
 

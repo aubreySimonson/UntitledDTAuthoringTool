@@ -1365,7 +1365,6 @@ MonoBehaviour:
   sampleTypePrefab: {fileID: 8622038507283267499, guid: 4b96a892b62a643649f82413c5372d7a, type: 3}
   floatPrefab: {fileID: 7565784349999557400, guid: b2eb6fa82c5c04dbbbd00929481c10d0, type: 3}
   generatorMenu: {fileID: 2139743073438220739}
-  camera: {fileID: 0}
   currentY: -0.1
   yInterval: 0.1
 --- !u!114 &2139743073438220739
@@ -1667,7 +1666,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: See More
+  m_text: See Less
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b8f5aeb9c6de7614db2631011b869bc3, type: 2}
   m_sharedMaterial: {fileID: -5839354330806206608, guid: b8f5aeb9c6de7614db2631011b869bc3, type: 2}
