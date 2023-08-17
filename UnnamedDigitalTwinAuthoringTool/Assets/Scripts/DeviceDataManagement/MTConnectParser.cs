@@ -6,43 +6,36 @@ using System.Xml.Serialization;
 using System.IO;//for file reading
 using UnityEngine.UI;
 
-/// <summary>
-/// This script is not part of Theo's original repo.
-///
+///<summary>
+///Part of MiRIAD, an authoring tool for digital twins
 /// This reads data, and assembles it into a graph of Nodes (which really need a better name...)
 /// It should be possible to replace this with other parsers from other sources,
 /// and have the rest of the project not particularly care
-///
-/// </summary>
+///???-->followspotfour@gmail.com
+///</summary>
 
 public class MTConnectParser : MonoBehaviour
 {
-  //our nice data structure is for interface and people things.
-  //the only thing the parser needs to know is what numbers need updated, and what to put there.
-
   public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
-  public List<AbstractValue> values;//all values that could possibly be updated. maybe trying to have this list at all is unworkable...
-  public string filePath;
+  public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
 
   public GameObject nodePrefab;
 
   public bool collapseDuplicateSamples;//do this whenever you have a lot of data-- for example, time-series data-- to prevent your computer from freezing
 
-  public int totalNodes = 0;//for debugging
-  public Text debugText;
+  public int totalNodes = 0;//we don't use this information for anything, but it's cool to know
+  public Text debugText;//leaving this null won't throw errors or break anything
 
   public GameObject rootNode;
 
   //variables for random guesses about how to read xml data on an android device below.
-  public TextAsset XMLObject;
+  private TextAsset XMLObject;
   StringReader xml;
   string extractedContent;
 
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
     //we're setting this here because doing it in the inspector is annoying
-    //filePath = Application.streamingAssetsPath + "/data_ur.xml";
-    filePath = Application.streamingAssetsPath + "/data_ur.xml";
     if(useStaticSampleData){
       ReadStaticSampleData();
     }
@@ -51,15 +44,11 @@ public class MTConnectParser : MonoBehaviour
   private void ReadStaticSampleData(){
     XmlDocument xmlDoc = new XmlDocument();
 
-    //commented out lines below this are a solution that works on desktop but not Quest
-    //xmlDoc.Load(filePath);
-
     //the following works on both quest and desktop
-    //TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
-    TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+    TextAsset textAsset = (TextAsset)Resources.Load(fileName, typeof(TextAsset));
     xmlDoc.LoadXml ( textAsset.text );
     XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
-    XmlNode allContent = topLevelNodes[1];
+    XmlNode allContent = topLevelNodes[1];//we can know that topLevelNodes will be a header and content because of the standard
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
   }
@@ -100,7 +89,7 @@ public class MTConnectParser : MonoBehaviour
   }
 
   //there are a bunch of things we do across the different overloads of createnodegameobject in exactly the same way
-  //these are all of our helper functions for making out code drier.
+  //these are all of our helper functions for making out code dryer.
   private AbstractNode CreateNodeHelperFunction(XmlNode node){
     GameObject thisNodeGo = Instantiate(nodePrefab);//instantiate an empty game object
     AbstractNode thisNodeUnity = AddCorrectNodeType(node, thisNodeGo);
@@ -191,7 +180,7 @@ public class MTConnectParser : MonoBehaviour
       else{//if we've seen this sampletype before, find it
         thisSampleType = FindSampleTypeByName(sampleTypes, childNode.Name);
       }
-      //then, now that we know that the sample type exists, do things with the data from this sample
+      //then, now that we know that the sample type exists, do things with the data from this sample:
       //increase the number of samples we've found
       thisSampleType.numberOfSamples++;
 
