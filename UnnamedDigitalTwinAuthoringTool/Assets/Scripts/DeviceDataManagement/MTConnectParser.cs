@@ -10,16 +10,19 @@ using UnityEngine.UI;
 ///Part of MiRIAD, an authoring tool for digital twins
 /// This reads data, and assembles it into a graph of Nodes (which really need a better name...)
 /// It should be possible to replace this with other parsers from other sources,
-/// and have the rest of the project not particularly care
+/// and have the rest of the project not particularly care.
+/// 
+/// It would be cool to have a fancy switcher for different remote URLs
 ///???-->followspotfour@gmail.com
 ///</summary>
 
 public class MTConnectParser : MonoBehaviour
 {
-  public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
+  public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url. Not working rn because we don't have any static sample data.
   public ServerTalker serverTalker;//this is a script where we hide all of our code related to getting anything from the internet.
-  public string remoteUrl = "https://smstestbed.nist.gov/vds/current";
-  public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
+  //public string remoteUrl = "https://smstestbed.nist.gov/vds/current";
+  public string remoteUrl = "https://demo.metalogi.io/current";
+    public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
 
   public GameObject nodePrefab;
 
