@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b0594a55df4409b8e74b75e9a86db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  remote: 1
   useStaticSampleData: 0
   serverTalker: {fileID: 920579178}
   remoteUrl: https://smstestbed.nist.gov/vds/current

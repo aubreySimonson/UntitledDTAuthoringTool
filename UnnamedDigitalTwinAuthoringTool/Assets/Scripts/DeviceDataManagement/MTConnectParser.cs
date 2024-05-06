@@ -5,6 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;//for file reading
 using UnityEngine.UI;
+using System;//for try/catch blocks
 
 ///<summary>
 ///Part of MiRIAD, an authoring tool for digital twins
@@ -18,11 +19,13 @@ using UnityEngine.UI;
 
 public class MTConnectParser : MonoBehaviour
 {
+  public enum RemoteURL {SMSTestbed, Metalogi};
+  public RemoteURL remote;
   public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url. Not working rn because we don't have any static sample data.
   public ServerTalker serverTalker;//this is a script where we hide all of our code related to getting anything from the internet.
-  //public string remoteUrl = "https://smstestbed.nist.gov/vds/current";
-  public string remoteUrl = "https://demo.metalogi.io/current";
-    public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
+  
+  public string remoteUrl = ""; 
+  public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
 
   public GameObject nodePrefab;
 
@@ -41,6 +44,13 @@ public class MTConnectParser : MonoBehaviour
 
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
+    //fancy switcher to make it easier to try different URLs
+    if(remote == RemoteURL.Metalogi){
+      remoteUrl="https://demo.metalogi.io/current";
+    }
+    else{
+      remoteUrl = "https://smstestbed.nist.gov/vds/current";
+    }
     ReadSampleData();
   }
 
@@ -229,20 +239,26 @@ public class MTConnectParser : MonoBehaviour
 
       //special things we only do for floats
       if(thisSampleType is SampleTypeFloat){
-        float f = float.Parse(childNode.InnerText);
-        SampleTypeFloat thisSampleTypeFloat = (SampleTypeFloat)thisSampleType;
-        thisSampleTypeFloat.total += f;
-        if(updateVal){
-          thisSampleTypeFloat.lastSampleValue = f;
+        Debug.Log("we think that this sample is a float:" + childNode.InnerText);
+        try{
+          float f = float.Parse(childNode.InnerText);
+          SampleTypeFloat thisSampleTypeFloat = (SampleTypeFloat)thisSampleType;
+          thisSampleTypeFloat.total += f;
+          if(updateVal){
+            thisSampleTypeFloat.lastSampleValue = f;
+          }
+          if(f>thisSampleTypeFloat.maxVal){
+            thisSampleTypeFloat.maxVal = f;
+          }
+          if(f<thisSampleTypeFloat.minVal){
+            thisSampleTypeFloat.minVal = f;
+          }
+          thisSampleTypeFloat.meanVal = thisSampleTypeFloat.total/(float)thisSampleTypeFloat.numberOfSamples;
+          //Debug.Log("The new mean of " + thisSampleTypeFloat.sampleTypeName + " is " + thisSampleTypeFloat.meanVal);
         }
-        if(f>thisSampleTypeFloat.maxVal){
-          thisSampleTypeFloat.maxVal = f;
+        catch (Exception e){
+          Debug.LogError("Attempted to make a SampleTypeFloat from " + childNode.InnerText + ", which is not a float");
         }
-        if(f<thisSampleTypeFloat.minVal){
-          thisSampleTypeFloat.minVal = f;
-        }
-        thisSampleTypeFloat.meanVal = thisSampleTypeFloat.total/(float)thisSampleTypeFloat.numberOfSamples;
-        //Debug.Log("The new mean of " + thisSampleTypeFloat.sampleTypeName + " is " + thisSampleTypeFloat.meanVal);
       }//end special float things
     }//end foreach
     holderNodeUnity.childNodes = samplesButAbstract;
@@ -262,6 +278,7 @@ public class MTConnectParser : MonoBehaviour
   //this is structured a bit stupidly because addcomponent is very picky--
   //there doesn't seem to be a way to add a component to a gameobject /after/ it's created
   private SampleType AddSampleTypeOfCorrectType(XmlNode node, GameObject go){
+    Debug.Log("Attempting to parse " + node.InnerText);
     //note that InnerText will return /all/ of the inner text of our node, so if out node isn't a leaf, this will get weird
     //check if it's a float
     float value;
@@ -269,6 +286,7 @@ public class MTConnectParser : MonoBehaviour
       SampleTypeFloat newFloat = go.AddComponent<SampleTypeFloat>();
       return newFloat;
     }
+    Debug.Log("Confirmed, this sample was not a float");
     //if you were to treat other values as special, you would check for them here
     //if it isn't anything specific that we care about, return an abstract sample type
     SampleType newSampleType = go.AddComponent<SampleType>();
