@@ -104,7 +104,7 @@ public class MTConnectParser : MonoBehaviour
     return null;
   }
 
-  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a big vague and misleading
+  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a bit vague and misleading
     if(parentNode==null || node == null){
       return null;
     }
@@ -174,6 +174,7 @@ public class MTConnectParser : MonoBehaviour
     else if(node.Name == "ComponentStream"){
       thisNodeUnity = thisNodeGo.AddComponent<Component>();//inherits from abstact node
       thisNodeUnity.GetComponent<Component>().componentName = node.Attributes["component"].Value;
+      thisNodeUnity.nodeID = node.Attributes["componentId"].Value;
     }
     else if (node.Name == "Samples"){
       thisNodeUnity = thisNodeGo.AddComponent<SamplesHolder>();//inherits from abstact node
