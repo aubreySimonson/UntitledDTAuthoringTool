@@ -5,18 +5,26 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;//for file reading
 using UnityEngine.UI;
+using System;//for try/catch blocks
 
 ///<summary>
 ///Part of MiRIAD, an authoring tool for digital twins
 /// This reads data, and assembles it into a graph of Nodes (which really need a better name...)
 /// It should be possible to replace this with other parsers from other sources,
-/// and have the rest of the project not particularly care
+/// and have the rest of the project not particularly care.
+/// 
+/// It would be cool to have a fancy switcher for different remote URLs
 ///???-->followspotfour@gmail.com
 ///</summary>
 
 public class MTConnectParser : MonoBehaviour
 {
-  public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url.
+  public enum RemoteURL {SMSTestbed, Metalogi};
+  public RemoteURL remote;
+  public bool useStaticSampleData;//if true, load from a file. Otherwise, look at the url. Not working rn because we don't have any static sample data.
+  public ServerTalker serverTalker;//this is a script where we hide all of our code related to getting anything from the internet.
+  
+  public string remoteUrl = ""; 
   public string fileName;//this should be just the name of the file, with no type extension. Put the file in the Resources folder.
 
   public GameObject nodePrefab;
@@ -32,23 +40,50 @@ public class MTConnectParser : MonoBehaviour
   private TextAsset XMLObject;
   StringReader xml;
   string extractedContent;
+  
 
 
   void Awake(){//awake runs before the first frame, so that other things can use this data
-    //we're setting this here because doing it in the inspector is annoying
-    if(useStaticSampleData){
-      ReadStaticSampleData();
+    //fancy switcher to make it easier to try different URLs
+    if(remote == RemoteURL.Metalogi){
+      remoteUrl="https://demo.metalogi.io/current";
     }
+    else{
+      remoteUrl = "https://smstestbed.nist.gov/vds/current";
+    }
+    ReadSampleData();
   }
 
-  private void ReadStaticSampleData(){
-    XmlDocument xmlDoc = new XmlDocument();
+
+  private void ReadSampleData(){
 
     //the following works on both quest and desktop
-    TextAsset textAsset = (TextAsset)Resources.Load(fileName, typeof(TextAsset));
-    xmlDoc.LoadXml ( textAsset.text );
-    XmlNodeList topLevelNodes = xmlDoc.ChildNodes; //List of all devices
-    XmlNode allContent = topLevelNodes[1];//we can know that topLevelNodes will be a header and content because of the standard
+    //TextAsset textAsset = (TextAsset)Resources.Load("data_ur", typeof(TextAsset));
+    TextAsset textAsset;
+    if(useStaticSampleData){
+      XmlDocument xmlDoc = new XmlDocument();
+      textAsset = (TextAsset)Resources.Load(fileName, typeof(TextAsset));
+      xmlDoc.LoadXml ( textAsset.text );
+      XmlNodeList topLevelNodes = xmlDoc.ChildNodes;
+      XmlNode allContent = topLevelNodes[1];
+      CreateNodeGameObject(allContent, true);
+      Debug.Log("Total nodes: " + totalNodes);
+    }
+    else{
+      serverTalker.GetDataSnapshot(remoteUrl);//this will then call SetAndReadWebData after it hears back from the server
+    }
+    
+  }
+
+  //spaghetti, but server talker needs to do a coroutine to do a web request, 
+  //and this is how it sends that information back when its done
+  public void SetAndReadWebData(string data){
+    XmlDocument xmlDoc = new XmlDocument();
+    xmlDoc.LoadXml(data);
+    XmlNodeList metaLevelNodes = xmlDoc.ChildNodes;
+    XmlNode topLevelNode = metaLevelNodes[2];//the first 2 are metadata
+    XmlNodeList topLevelNodes = topLevelNode.ChildNodes;
+    XmlNode allContent = topLevelNodes[1];
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
   }
@@ -68,7 +103,7 @@ public class MTConnectParser : MonoBehaviour
     return null;
   }
 
-  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a big vague and misleading
+  private AbstractNode CreateNodeGameObject(XmlNode node, AbstractNode parentNode, bool doRecursion){//this is a bit vague and misleading
     if(parentNode==null || node == null){
       return null;
     }
@@ -131,13 +166,15 @@ public class MTConnectParser : MonoBehaviour
   //we hide checking for every possible node type we care about down here
   private AbstractNode AddCorrectNodeType(XmlNode node, GameObject thisNodeGo){
     AbstractNode thisNodeUnity;
-    if(node.Name == "DeviceStream"){
+    if(node.Name == "DeviceStream" || node.Name == "Device"){
       thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
       thisNodeUnity.GetComponent<Device>().deviceName = node.Attributes["name"].Value;//we assume that all devices will have a name in this format. do they?
+      thisNodeUnity.nodeID = node.Attributes["uuid"].Value;
     }
     else if(node.Name == "ComponentStream"){
       thisNodeUnity = thisNodeGo.AddComponent<Component>();//inherits from abstact node
       thisNodeUnity.GetComponent<Component>().componentName = node.Attributes["component"].Value;
+      thisNodeUnity.nodeID = node.Attributes["componentId"].Value;
     }
     else if (node.Name == "Samples"){
       thisNodeUnity = thisNodeGo.AddComponent<SamplesHolder>();//inherits from abstact node
@@ -203,20 +240,26 @@ public class MTConnectParser : MonoBehaviour
 
       //special things we only do for floats
       if(thisSampleType is SampleTypeFloat){
-        float f = float.Parse(childNode.InnerText);
-        SampleTypeFloat thisSampleTypeFloat = (SampleTypeFloat)thisSampleType;
-        thisSampleTypeFloat.total += f;
-        if(updateVal){
-          thisSampleTypeFloat.lastSampleValue = f;
+        Debug.Log("we think that this sample is a float:" + childNode.InnerText);
+        try{
+          float f = float.Parse(childNode.InnerText);
+          SampleTypeFloat thisSampleTypeFloat = (SampleTypeFloat)thisSampleType;
+          thisSampleTypeFloat.total += f;
+          if(updateVal){
+            thisSampleTypeFloat.lastSampleValue = f;
+          }
+          if(f>thisSampleTypeFloat.maxVal){
+            thisSampleTypeFloat.maxVal = f;
+          }
+          if(f<thisSampleTypeFloat.minVal){
+            thisSampleTypeFloat.minVal = f;
+          }
+          thisSampleTypeFloat.meanVal = thisSampleTypeFloat.total/(float)thisSampleTypeFloat.numberOfSamples;
+          //Debug.Log("The new mean of " + thisSampleTypeFloat.sampleTypeName + " is " + thisSampleTypeFloat.meanVal);
         }
-        if(f>thisSampleTypeFloat.maxVal){
-          thisSampleTypeFloat.maxVal = f;
+        catch (Exception e){
+          Debug.LogError("Attempted to make a SampleTypeFloat from " + childNode.InnerText + ", which is not a float");
         }
-        if(f<thisSampleTypeFloat.minVal){
-          thisSampleTypeFloat.minVal = f;
-        }
-        thisSampleTypeFloat.meanVal = thisSampleTypeFloat.total/(float)thisSampleTypeFloat.numberOfSamples;
-        //Debug.Log("The new mean of " + thisSampleTypeFloat.sampleTypeName + " is " + thisSampleTypeFloat.meanVal);
       }//end special float things
     }//end foreach
     holderNodeUnity.childNodes = samplesButAbstract;
@@ -236,6 +279,7 @@ public class MTConnectParser : MonoBehaviour
   //this is structured a bit stupidly because addcomponent is very picky--
   //there doesn't seem to be a way to add a component to a gameobject /after/ it's created
   private SampleType AddSampleTypeOfCorrectType(XmlNode node, GameObject go){
+    Debug.Log("Attempting to parse " + node.InnerText);
     //note that InnerText will return /all/ of the inner text of our node, so if out node isn't a leaf, this will get weird
     //check if it's a float
     float value;
@@ -243,6 +287,7 @@ public class MTConnectParser : MonoBehaviour
       SampleTypeFloat newFloat = go.AddComponent<SampleTypeFloat>();
       return newFloat;
     }
+    Debug.Log("Confirmed, this sample was not a float");
     //if you were to treat other values as special, you would check for them here
     //if it isn't anything specific that we care about, return an abstract sample type
     SampleType newSampleType = go.AddComponent<SampleType>();
