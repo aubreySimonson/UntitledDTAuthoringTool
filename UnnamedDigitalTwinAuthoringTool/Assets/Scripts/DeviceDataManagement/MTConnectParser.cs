@@ -84,7 +84,6 @@ public class MTConnectParser : MonoBehaviour
     XmlNode topLevelNode = metaLevelNodes[2];//the first 2 are metadata
     XmlNodeList topLevelNodes = topLevelNode.ChildNodes;
     XmlNode allContent = topLevelNodes[1];
-    Debug.Log("add content was " + allContent);
     CreateNodeGameObject(allContent, true);
     Debug.Log("Total nodes: " + totalNodes);
   }
@@ -170,6 +169,7 @@ public class MTConnectParser : MonoBehaviour
     if(node.Name == "DeviceStream" || node.Name == "Device"){
       thisNodeUnity = thisNodeGo.AddComponent<Device>();//inherits from abstract node
       thisNodeUnity.GetComponent<Device>().deviceName = node.Attributes["name"].Value;//we assume that all devices will have a name in this format. do they?
+      thisNodeUnity.nodeID = node.Attributes["uuid"].Value;
     }
     else if(node.Name == "ComponentStream"){
       thisNodeUnity = thisNodeGo.AddComponent<Component>();//inherits from abstact node
